@@ -10,6 +10,9 @@ import { useState } from 'react'
 import LoginPopup from './components/LoginPopup/LoginPopup'
 import Verify from './pages/Verify/Verify'
 import MyOrders from './pages/MyOrders/MyOrders'
+import FoodDetail   from './pages/FoodDetail/FoodDetail'
+import ScrollToTop  from "./components/ScrollToTop/ScrollToTop.jsx";
+import Profile from './pages/Profile/Profile.jsx'
 
 console.log('%cWhy are you looking at my logs 👀', 'color: #FF5733; font-size: 20px;');
 
@@ -22,12 +25,15 @@ const App = () => {
     {showLogin?<LoginPopup setShowLogin={setShowLogin}/>:<></>}
     <div className='app'>
         <Navbar setShowLogin={setShowLogin}  />
+        <ScrollToTop />{}
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/order' element={<PlaceOrder />} />
           <Route path='/verify' element={<Verify />} />
           <Route path='/myorders' element={<MyOrders />} />
+            <Route path='/food/:foodId' element={<FoodDetail />} />
+            <Route path='/profile' element={<Profile />} />
         </Routes>
       </div>
       <Footer />

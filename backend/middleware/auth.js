@@ -14,7 +14,8 @@ const authMiddleware = async (req, res, next) => {
         req.user = payload;
         next();
     } catch (error) {
-        return res.json({ success: false, message: "Token sai" });
+        console.error("LỖI XÁC THỰC TOKEN:", error.message);
+        return res.json({ success: false, message: "Token sai hoặc hết hạn" });
     }
 };
 

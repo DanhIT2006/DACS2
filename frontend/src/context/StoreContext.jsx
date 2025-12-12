@@ -3,6 +3,25 @@ import { createContext, useEffect, useState } from "react";
 
 export const StoreContext = createContext(null)
 
+const decodeJWT = (token) => {
+    if (!token) return null;
+    try {
+        const base64Url = token.split('.')[1];
+        // Thay thế ký tự không hợp lệ cho base64
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join('')
+        );
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        console.error("Lỗi giải mã token:", e);
+        return null;
+    }
+};
+
 const StoreContextProvider = (props) => {
 
     const [cartItems, setCartItems] = useState({});
@@ -83,7 +102,8 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        decodeJWT
     }
 
     return (

@@ -31,9 +31,9 @@ const Cart = () => {
                 <div className='cart-items-title cart-items-item'>
                   <img src={url+"/images/"+item.image} alt="" />
                   <p>{item.name}</p>
-                  <p>${item.price}</p>
+                  <p>{formatPrice(getTotalCartAmount())}</p>
                   <p>{cartItems[item._id]}</p>
-                  <p>${item.price * cartItems[item._id]}</p>
+                  <p>{formatPrice(getTotalCartAmount() + (getTotalCartAmount() === 0 ? 0 : 20000))}</p>
                   <p onClick={()=>removeFromCart(item._id)} className='cross' style={{color: "red", cursor: "pointer"}}>X</p>
                 </div>
                 <hr />

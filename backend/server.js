@@ -7,6 +7,8 @@ import foodRouter from "./routes/foodRoute.js"
 import userRouter from "./routes/userRoute.js"
 import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
+import commentRouter from "./routes/commentRoute.js";
+import shopRouter from "./routes/shopRoute.js";
 
 
 // app config
@@ -26,6 +28,8 @@ app.use("/images",express.static('uploads'))
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
+app.use("/api/comment", commentRouter);
+app.use("/api/shop", shopRouter);
 
 
 

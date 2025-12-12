@@ -37,7 +37,7 @@ useEffect(()=>{
 
   return (
     <div className='order add'>
-      <h3>Order Page</h3>
+      <h3>Trang Orders</h3>
       <div className="order-list">
         {orders.map((order,index)=>(
           <div key={index} className='order-item'>
@@ -61,11 +61,11 @@ useEffect(()=>{
               <p className="order-item-phone">{order.address.phone}</p>
             </div>
             <p>Items : {order.items.length}</p>
-            <p>${order.amount}</p>
+            <p>{order.amount.toLocaleString('vi-VN')}₫</p>
             <select onChange={(event)=>statusHandler(event,order._id)} value={order.status}>
-              <option value="Food Processing">Food Processing</option>
-              <option value="Out for delivery">Out for delivery</option>
-              <option value="Delivered">Delivered</option>
+              <option value="Food Processing">Đang chế biến</option>
+              <option value="Out for delivery">Đang giao hàng</option>
+              <option value="Delivered">Đã giao hàng</option>
             </select>
           </div>
         ))}

@@ -4,7 +4,8 @@ import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { assets } from '../../assets/assets';
 
-const MyOrders = () => {
+
+    const MyOrders = () => {
 
     const { url, token } = useContext(StoreContext);
     const [data, setData] = useState([]);
@@ -13,22 +14,18 @@ const MyOrders = () => {
         if (!token) return;
         try {
             const response = await axios.post(url + "/api/order/userorders", {}, {
-                headers: {
-                    token: token
-                }
+                headers: { token }
             });
 
-            console.log("Kết quả API userorders:", response.data);
+            console.log("Response MyOrders:", response.data); // ← THÊM LOG ĐỂ XEM CÓ DATA KHÔNG
 
-            // ← thêm kiểm tra response
             if (response.data.success) {
-                setData(response.data.data || []);
+                setData(response.data.data);
             } else {
-                setData([]);
+                console.log("Lỗi MyOrders:", response.data.message);
             }
-        } catch (error) {
-            console.log("Lỗi lấy đơn hàng:", error);
-            setData([]);
+        } catch (err) {
+            console.error("Lỗi fetch orders:", err);
         }
     }
 
@@ -41,7 +38,7 @@ const MyOrders = () => {
     if (data.length === 0) {
         return (
             <div className='my-orders'>
-                <h2 className='myordersp'>Đơn hàng của bạn</h2>
+                <h2 className='myordersp'>Đơn hàng của tôi</h2>
                 <div className="container" style={{ textAlign: 'center', padding: '50px', color: '#888' }}>
                     <p>Chưa có đơn hàng nào</p>
                 </div>
@@ -51,7 +48,7 @@ const MyOrders = () => {
 
     return (
         <div className='my-orders'>
-            <h2 className='myordersp'>My Orders</h2>
+            <h2 className='myordersp'>Đơn hàng của tôi</h2>
             <div className="container">
                 {data.map((order, index) => (
                     <div key={index} className='my-orders-order'>
@@ -65,8 +62,8 @@ const MyOrders = () => {
                                 }
                             })}
                         </p>
-                        <p>${order.amount}.00</p>
-                        <p>Items: {order.items.length}</p>
+                        <p>{order.amount.toLocaleString('vi-VN')}₫</p>
+                        <p>Số lượng: {order.items.length}</p>
                         <p><span>&#x25cf;</span> <b>{order.status}</b></p>
                         <button onClick={fetchOrders}>Track Order</button>
                     </div>

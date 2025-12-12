@@ -7,7 +7,7 @@ const placeOrder = async (req, res) => {
     console.log("Body:", req.body);
 
     try {
-        const userId = req.user._id || req.user.id || req.user.userId;
+        const userId = req.user.id;
         if (!userId) {
             console.error("Lỗi xác thực: Không tìm thấy ID trong payload token");
             return res.status(401).json({ success: false, message: "Unauthorized: Không tìm thấy userId trong Token" });
@@ -62,7 +62,7 @@ const verifyOrder = async (req,res) => {
 // user orders for frontend
 const userOrders = async (req,res) => {
     try {
-        const orders = await orderModel.find({userId: req.user._id});
+        const orders = await orderModel.find({userId: req.user.id});
         res.json({success:true,data:orders})
     } catch (error) {
         console.log(error);

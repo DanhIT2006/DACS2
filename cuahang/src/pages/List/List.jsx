@@ -53,7 +53,7 @@ const List = () => {
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>{Number(item.price).toLocaleString('vi-VN')}₫</p>
-            <p onClick={()=>removeFood(item._id)} className='cursor'>X</p>
+            <p onClick={()=>removeFood(item._id)} style={{color: "red", cursor: "pointer"}}>X</p>
           </div>
         )
       })}

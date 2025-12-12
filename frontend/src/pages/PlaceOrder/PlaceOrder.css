@@ -34,53 +34,77 @@
     margin-top: 30px;
 }
 
-:root .emaill {
-    background-color: black;
-}
-:root .emaill{
+/* DARK MODE STYLING (:root) */
+
+/* 1. Tiêu đề */
+:root .title {
     color: white;
 }
 
-:root .streett {
-    background-color: black;
-}
-:root .streett{
-    color: white;
-}
-
-:root .phonee {
-    background-color: black;
-}
-:root .phonee{
-    color: white;
+/* 2. Style chung cho TẤT CẢ INPUTS */
+:root .place-order-left input {
+    background-color: black !important;
+    color: white !important;
+    border: 1px solid #777;
 }
 
-
-.lightcolors .emaill {
-    background-color: white;
+/* 3. Style Placeholder */
+/* Quy tắc chung */
+:root .place-order-left input::placeholder {
+    color: white !important;
+    opacity: 0.7;
 }
-.lightcolors .emaill{
+/* Vendor Prefixes */
+:root .place-order-left input::-webkit-input-placeholder {
+    color: white !important;
+    opacity: 0.7;
+}
+:root .place-order-left input:-ms-input-placeholder {
+    color: white !important;
+    opacity: 0.7;
+}
+:root .place-order-left input::-moz-placeholder {
+    color: white !important;
+    opacity: 0.7;
+}
+
+
+/* LIGHT MODE STYLING */
+/* 1. Tiêu đề */
+.lightcolors .title {
     color: black;
 }
 
-.lightcolors .streett {
-    background-color: white;
-}
-.lightcolors .streett{
-    color: black;
-}
-
-.lightcolors .phonee {
-    background-color: white;
-}
-.lightcolors .phonee{
-    color: black;
+/* 2. Style chung cho TẤT CẢ INPUTS  */
+.lightcolors .place-order-left input {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc;
 }
 
+/* 3. Style Placeholder
+
+.lightcolors .place-order-left input::placeholder {
+    color: black !important;
+    opacity: 0.5;
+}
+/* Vendor Prefixes */
+.lightcolors .place-order-left input::-webkit-input-placeholder {
+    color: black !important;
+    opacity: 0.5;
+}
+.lightcolors .place-order-left input:-ms-input-placeholder {
+    color: black !important;
+    opacity: 0.5;
+}
+.lightcolors .place-order-left input::-moz-placeholder {
+    color: black !important;
+    opacity: 0.5;
+}
 
 :root .multi-fields input {
     background-color: black;
-    color: white; 
+    color: white;
 }
 
 :root .multi-fields input::placeholder {
@@ -93,14 +117,5 @@
     color: black;
 }
 .lightcolors .multi-fields input::placeholder {
-    color: black;
-}
-
-
-:root .title {
-    color: white;
-}
-
-.lightcolors .title {
     color: black;
 }

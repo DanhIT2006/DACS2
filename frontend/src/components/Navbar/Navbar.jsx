@@ -156,14 +156,19 @@ const Navbar = ({ setShowLogin }) => {
                             alt=""
                         />
                         <ul className="nav-profile-dropdown">
+                            <li onClick={() => navigate("/profile")}>
+                                <img src={assets.profile_icon} alt="" />
+                                <p>Thông tin cá nhân</p>
+                            </li>
+                            <hr />
                             <li onClick={() => navigate("/myorders")}>
                                 <img src={assets.bag_icon} alt="" />
-                                <p>Orders</p>
+                                <p>Đơn hàng</p>
                             </li>
                             <hr />
                             <li onClick={logout}>
                                 <img src={assets.logout_icon} alt="" />
-                                <p>Logout</p>
+                                <p>Đăng xuất</p>
                             </li>
                         </ul>
                     </div>
