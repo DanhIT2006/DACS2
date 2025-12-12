@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './Orders.css'
 import {toast} from "react-toastify"
 import axios from "axios"
 import {assets} from "../../assets/assets"
+import { StoreContext } from '../../context/StoreContext';
 
 const Orders = () => {
-  const url = 'http://localhost:5000';
+  const { url } = useContext(StoreContext);
 
   const [orders,setOrders] = useState([]);
 

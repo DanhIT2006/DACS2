@@ -101,7 +101,7 @@ const updateProfile = async (req, res) => {
             userId,
             {
                 name: updates.name,
-                // Thêm các trường địa chỉ nếu bạn muốn lưu vào đây
+                // Thêm các trường địa chỉ
             },
             { new: true, runValidators: true } // new: true để trả về document đã cập nhật
         ).select('-password');

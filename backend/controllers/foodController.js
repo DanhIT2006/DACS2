@@ -5,24 +5,40 @@ import fs from 'fs'
 // add food item
 
 const addFood = async (req,res) => {
-
+    try {
     let image_filename = `${req.file.filename}`;
+
+    const userId = req.user.id;
 
     const food = new foodModel({
         name:req.body.name,
         description:req.body.description,
         price:req.body.price,
         category:req.body.category,
-        image:image_filename
-    })
-    try {
+        image:image_filename,
+        ownerID:userId,
+    });
         await food.save();
-        res.json({success:true,message:"Food Added"})
+        res.json({success:true,message:"Thêm món thành công"})
     } catch (error) {
         console.log(error)
         res.json({success:false,message:"Error"})
     }
 }
+
+const listShopFood = async (req, res) => {
+    try {
+        const userId = req.user.id; // Lấy ID Chủ cửa hàng từ token
+
+        // CHỈ LỌC món ăn có ownerId khớp với userId
+        const foods = await foodModel.find({ ownerId: userId });
+
+        res.json({ success: true, data: foods });
+    } catch (error) {
+        console.error("Lỗi lấy danh sách món ăn cho shop:", error);
+        res.json({ success: false, message: "Lỗi Server" });
+    }
+};
 
 // all food list
 const listFood = async (req,res) => {
@@ -50,4 +66,4 @@ const removeFood = async (req,res) => {
 }
 
 
-export {addFood,listFood,removeFood}
+export {addFood,listFood,removeFood,listShopFood};

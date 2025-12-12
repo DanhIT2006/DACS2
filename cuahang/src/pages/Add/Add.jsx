@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './Add.css'
 import { assets } from '../../assets/assets'
 import axios from "axios"
 import { toast } from 'react-toastify'
-
+import { StoreContext } from '../../context/StoreContext';
 
 const Add = () => {
-    const url = 'http://localhost:5000';
+    const { url, token } = useContext(StoreContext);
 
     const [image,setImage] = useState(false);
     const [data,setData] = useState({
@@ -30,7 +30,7 @@ const Add = () => {
         formData.append("price",Number(data.price))
         formData.append("category",data.category)
         formData.append("image",image)
-        const response = await axios.post(`${url}/api/food/add`,formData)
+        const response = await axios.post(url + "/api/shop/add", formData, { headers: { token } });
         if (response.data.success) {
             setData({
                 name:"",
@@ -94,7 +94,7 @@ const Add = () => {
                     </p>
                 </div>
             </div>
-            <button type='submit' className='add-btn'>ADD</button>
+            <button type='submit' className='add-btn'>Thêm</button>
         </form>
     </div>
   )
