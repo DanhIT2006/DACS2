@@ -101,13 +101,17 @@ const PlaceOrder = () => {
                     <input required name='ho' onChange={onChangeHandler} value={data.ho} type="text" placeholder='Họ' />
                     <input required name='ten' onChange={onChangeHandler} value={data.ten} type="text" placeholder='Tên' />
                 </div>
+                <div className="multi-fields">
                 <input required name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Email' />
                 <input required name='tinh' onChange={onChangeHandler} value={data.tinh} type="text" placeholder='Tỉnh' />
+                </div>
                 <div className="multi-fields">
                     <input required name='phuongXa' onChange={onChangeHandler} value={data.phuongXa} type="text" placeholder='Phường/Xã' />
                     <input required name='tenDuong' onChange={onChangeHandler} value={data.tenDuong} type="text" placeholder='Tên đường' />
                 </div>
+                <div className="multi-fields">
                 <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='SĐT' />
+                </div>
             </div>
 
             <div className="place-order-right">

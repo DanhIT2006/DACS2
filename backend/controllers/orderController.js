@@ -59,7 +59,7 @@ const verifyOrder = async (req,res) => {
 }
 
 
-// user orders for frontend
+// user orders for khach hang
 const userOrders = async (req,res) => {
     try {
         const orders = await orderModel.find({userId: req.user.id});

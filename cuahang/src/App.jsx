@@ -9,7 +9,8 @@ import LoginPopup from './components/LoginPopup/LoginPopup'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import StoreContextProvider from './context/StoreContext'   // QUAN TRỌNG
+import StoreContextProvider from './context/StoreContext'
+import ShopProfile from "./pages/ShopProfile/ShopProfile.jsx";
 
 const App = () => {
     const [showLogin, setShowLogin] = useState(false)
@@ -27,6 +28,7 @@ const App = () => {
                     <Route path="/add" element={<Add />} />
                     <Route path="/list" element={<List />} />
                     <Route path="/orders" element={<Orders />} />
+                    <Route path="/shopProfile" element={<ShopProfile />} />
                 </Routes>
             </div>
         </StoreContextProvider>

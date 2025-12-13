@@ -64,9 +64,9 @@ useEffect(()=>{
             <p>Items : {order.items.length}</p>
             <p>{order.amount.toLocaleString('vi-VN')}₫</p>
             <select onChange={(event)=>statusHandler(event,order._id)} value={order.status}>
-              <option value="Food Processing">Đang chế biến</option>
-              <option value="Out for delivery">Đang giao hàng</option>
-              <option value="Delivered">Đã giao hàng</option>
+              <option value="Đang chế biến">Đang chế biến</option>
+              <option value="Đang giao hàng">Đang giao hàng</option>
+              <option value="Đã giao hàng">Đã giao hàng</option>
             </select>
           </div>
         ))}

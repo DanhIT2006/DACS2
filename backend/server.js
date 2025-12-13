@@ -9,6 +9,9 @@ import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
 import commentRouter from "./routes/commentRoute.js";
 import shopRouter from "./routes/shopRoute.js";
+import couponRouter from "./routes/couponRoute.js";
+
+
 
 
 // app config
@@ -30,6 +33,7 @@ app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
 app.use("/api/comment", commentRouter);
 app.use("/api/shop", shopRouter);
+app.use("/api/coupon", couponRouter);
 
 
 

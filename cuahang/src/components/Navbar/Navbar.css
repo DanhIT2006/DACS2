@@ -1,14 +1,11 @@
-/* ====================== NAVBAR CHUNG CHO CẢ KHÁCH & SHOP ====================== */
+/* NAVBAR */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 4%;
-    background-color: var(--nav-color-two, #0d0618);
-    position: sticky;
-    top: 0;
+    padding: 12px 30px;
+    position: relative;
     z-index: 999;
-    border-bottom: 1px solid var(--border-color, #27272a);
 }
 
 /* Logo */
@@ -28,40 +25,51 @@
     gap: 30px;
 }
 
-/* ====================== TOGGLE DARK/LIGHT ====================== */
-#visual-toggle-button {
-    width: 56px;
-    height: 32px;
-    background: #333;
-    border-radius: 50px;
+/* TOGGLE DARK/LIGHT  */
+#visual-toggle-button{
+    width: 37px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
     cursor: pointer;
-    border: 2px solid var(--border-color);
-    overflow: hidden;
-    transition: all 0.4s;
 }
-
-.svgIcon-toggle {
-    width: 22px;
-    height: 22px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.4s ease;
-}
-
-.moon-svg { opacity: 1; }
-.sun-svg  { opacity: 0; transform: translate(-50%, -50%) rotate(180deg); }
-
-.lightmode .moon-svg { opacity: 0; }
-.lightmode .sun-svg  { opacity: 1; transform: translate(-50%, -50%) rotate(0deg); filter: brightness(0); }
-
-.visual-toggle {
+/* checkbox */
+#visual-toggle{
+    appearance: none;
     display: none;
 }
 
-/* ====================== NÚT SIGN IN ====================== */
+.svgIcon-toggle{
+    width: 25px;
+}
+
+.moon-svg{
+    width: 13px;
+    position: absolute;
+    transition: all .3s;
+}
+.sun-svg{
+    opacity: 0;
+    transition: all .3s;
+}
+.lightmode .sun-svg{
+    filter: brightness(0);
+    transform: rotate(180deg);
+    opacity: 1;
+}
+.lightmode .moon-svg{
+    opacity: 0;
+}
+.animate .moon-svg{
+    transform: rotate(360deg);
+    transition: all .3s;
+}
+
+/* NÚT SIGN IN  */
 .signbutton {
     padding: 10px 24px;
     background: tomato;
@@ -79,7 +87,7 @@
     transform: translateY(-2px);
 }
 
-/* ====================== PROFILE DROPDOWN ====================== */
+/* PROFILE DROPDOWN */
 .navbar-profile {
     position: relative;
     cursor: pointer;
@@ -167,7 +175,7 @@
     filter: none !important;
 }
 
-/* ====================== RESPONSIVE ====================== */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .navbar-right {
         gap: 15px;

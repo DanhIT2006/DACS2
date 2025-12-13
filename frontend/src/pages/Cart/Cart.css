@@ -122,6 +122,60 @@
     color: grey;
 }
 
+/* phần điều chỉnh số lượng */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f0f0f0;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+.quantity-control button {
+    border: none;
+    background-color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff6347; /* Màu cà chua giống theme của bạn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.quantity-control button:hover {
+    background-color: #ff6347;
+    color: white;
+}
+
+.quantity-control p {
+    margin: 0;
+    font-weight: 500;
+    min-width: 20px;
+    text-align: center;
+    color: black;
+}
+
+/* Dark mode support cho phần quantity (nếu bạn dùng class lightcolors/darkcolors) */
+:root .quantity-control {
+    background-color: #333; /* Nền tối khi ở dark mode */
+}
+:root .quantity-control p {
+    color: white;
+}
+
+.lightcolors .quantity-control {
+    background-color: #f0f0f0;
+}
+.lightcolors .quantity-control p {
+    color: black;
+}
 
 @media (max-width:750px){
     .cart-bottom{

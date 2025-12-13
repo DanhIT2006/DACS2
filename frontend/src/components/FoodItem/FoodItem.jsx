@@ -7,7 +7,7 @@ import { StoreContext } from '../../context/StoreContext'
 import { formatPrice } from '../../utils/formatPrice'
 import { useNavigate } from 'react-router-dom';
 
-function FoodItem ({id,name,price,description,image}) {
+function FoodItem ({id,name,price,description,image, shopName}) {
     const {cartItems = {},addToCart,removeFromCart,url} = useContext(StoreContext);
     const navigate = useNavigate();
 
@@ -38,6 +38,11 @@ function FoodItem ({id,name,price,description,image}) {
                     <p className='namewe'>{name}</p>
                     <img className='ratingstars' src={assets.rating_starts} alt="" />
                 </div>
+                {shopName && (
+                    <p className="food-item-shop-name" style={{fontSize: '15px', color: '#ff6347', fontWeight: 'bold', marginBottom: '5px'}}>
+                        🏡 Cửa hàng: {shopName}
+                    </p>
+                )}
                 <p className="food-item-desc">{description}</p>
                 <p className="food-item-price">{formatPrice(price)}</p>
             </div>

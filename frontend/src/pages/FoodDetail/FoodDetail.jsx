@@ -42,6 +42,11 @@ const FoodDetail = () => {
                     {/* Cột 1: Thông tin cơ bản */}
                     <div className='food-detail-info'>
                         <h2 className='detail-name'>{foodItem.name}</h2>
+                        {foodItem.shopId && (
+                            <p className='detail-shop' style={{marginBottom: '10px', fontSize: '1.1em'}}>
+                                Cửa hàng: <span style={{fontWeight: 'bold', color: '#ff6347'}}>{foodItem.shopId.shopName}</span>
+                            </p>
+                        )}
                         <p className='detail-category'>Danh mục: <span>{foodItem.category}</span></p>
                         <div className='detail-price-section'>
                             <p className='detail-price'>Giá: <span>{foodItem.price.toLocaleString('vi-VN')}₫</span></p>

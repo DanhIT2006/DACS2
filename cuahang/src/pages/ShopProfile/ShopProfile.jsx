@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './ShopProfile.css';
-import { StoreContext } from '../../../../frontend/src/context/StoreContext';
+import { StoreContext } from '../../../../cuahang/src/context/StoreContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

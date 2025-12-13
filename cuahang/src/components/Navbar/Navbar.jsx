@@ -5,7 +5,7 @@ import { StoreContext } from '../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ setShowLogin }) => {
-    const { token, setToken, decodeJWT } = useContext(StoreContext);
+    const { token, setToken } = useContext(StoreContext);
     const navigate = useNavigate();
 
 
@@ -44,14 +44,14 @@ const Navbar = ({ setShowLogin }) => {
                 document
                     .getElementById("visual-toggle-button")
                     .classList.add("lightmode");
-                document.querySelector(".logo").style.filter = "none"; // Keep logo unchanged
+                document.querySelector(".logo").style.filter = "none";
             } else {
                 localStorage.setItem("mode", "dark");
                 document.body.classList.remove("lightcolors");
                 document
                     .getElementById("visual-toggle-button")
                     .classList.remove("lightmode");
-                document.querySelector(".logo").style.filter = "none"; // Keep logo unchanged
+                document.querySelector(".logo").style.filter = "none";
             }
         });
     }, []);
@@ -62,7 +62,6 @@ const Navbar = ({ setShowLogin }) => {
         navigate('/');
     };
 
-    const role = token ? decodeJWT(token)?.role : null;
 
     return (
         <div className="navbar">
@@ -73,7 +72,6 @@ const Navbar = ({ setShowLogin }) => {
                 <label
                     htmlFor="visual-toggle"
                     id="visual-toggle-button"
-                    onClick="visualMode()"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -96,35 +94,22 @@ const Navbar = ({ setShowLogin }) => {
                     </svg>
                     <input
                         type="checkbox"
-                        className="visual-toggle"
                         id="visual-toggle"
                     />
                 </label>
 
                 {/* Nếu chưa login */}
                 {!token ? (
-                    <button className="signbutton" onClick={() => setShowLogin?.(true) || navigate('/')}>
-                        Sign In
+                    <button className="signbutton"
+                            onClick={() => setShowLogin(true)}
+                            >
+                        Đăng nhập
                     </button>
                 ) : (
                     <div className="navbar-profile">
                         <img src={assets.profile_image} alt="Profile" className="profile-img" />
                         <ul className="nav-profile-dropdown">
-                            {role === 'shop_owner' && (
-                                <>
-                                    <li onClick={() => navigate('/add')}><p>Thêm món</p></li>
-                                    <li onClick={() => navigate('/list')}><p>Danh mục món</p></li>
-                                    <li onClick={() => navigate('/orders')}><p>Orders</p></li>
-                                    <hr />
-                                </>
-                            )}
-                            {role === 'user' && (
-                                <>
-                                    <li onClick={() => navigate('/myorders')}><p>Đơn hàng</p></li>
-                                    <li onClick={() => navigate('/profile')}><p>Thông tin cá nhân</p></li>
-                                    <hr />
-                                </>
-                            )}
+                            <li onClick={() => navigate('/shopprofile')}><p>Thông tin cửa hàng</p></li>
                             <li onClick={logout}><p>Đăng xuất</p></li>
                         </ul>
                     </div>

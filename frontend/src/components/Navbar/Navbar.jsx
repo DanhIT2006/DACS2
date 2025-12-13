@@ -65,7 +65,7 @@ const Navbar = ({ setShowLogin }) => {
                 document.querySelector(".logo").style.filter = "none"; // Keep logo unchanged
             }
         });
-    }, []); // Empty dependency array to run the effect only once
+    }, []);
 
     return (
         <div className="navbar">
@@ -78,14 +78,14 @@ const Navbar = ({ setShowLogin }) => {
                     onClick={() => setMenu("home")}
                     className={menu === "home" ? "active" : ""}
                 >
-                    home
+                    Trang chủ
                 </Link>
                 <a
                     href="#explore-menu"
                     onClick={() => setMenu("menu")}
                     className={menu === "menu" ? "active" : ""}
                 >
-                    menu
+                    Menu
                 </a>
 
                 <a
@@ -93,7 +93,7 @@ const Navbar = ({ setShowLogin }) => {
                     onClick={() => setMenu("contact-us")}
                     className={menu === "contact-us" ? "active" : ""}
                 >
-                    contact us
+                    Liên hệ
                 </a>
             </ul>
             <div className="navbar-right">
@@ -101,7 +101,7 @@ const Navbar = ({ setShowLogin }) => {
                     <label
                         htmlFor="visual-toggle"
                         id="visual-toggle-button"
-                        onClick="visualMode()"
+
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

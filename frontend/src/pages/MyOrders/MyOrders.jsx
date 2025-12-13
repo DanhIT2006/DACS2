@@ -65,7 +65,7 @@ import { assets } from '../../assets/assets';
                         <p>{order.amount.toLocaleString('vi-VN')}₫</p>
                         <p>Số lượng: {order.items.length}</p>
                         <p><span>&#x25cf;</span> <b>{order.status}</b></p>
-                        <button onClick={fetchOrders}>Track Order</button>
+                        <button onClick={fetchOrders}>Theo dõi</button>
                     </div>
                 ))}
             </div>
