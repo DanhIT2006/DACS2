@@ -27,7 +27,7 @@ const Cart = () => {
                     // Logic an toàn: Nếu shopId là object thì lấy ._id, nếu là chuỗi thì lấy luôn
                     currentShopId = typeof item.shopId === 'object' ? item.shopId._id : item.shopId;
                 }
-                break; // Chỉ cần lấy 1 cái vì giỏ hàng chung 1 quán
+                break;
             }
         }
         console.log("ID Quán gửi đi check:", currentShopId);

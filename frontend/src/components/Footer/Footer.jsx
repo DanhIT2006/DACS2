@@ -32,10 +32,10 @@ const Footer = () => {
                 <div className="footer-content-center">
                     <h2>Công ty</h2>
                     <ul>
-                        <li>Home</li>
-                        <li>About us</li>
-                        <li>Delivery</li>
-                        <li>Privacy Policy</li>
+                        <li>Trang chủ</li>
+                        <li>Về chúng tôi</li>
+                        <li>Vận chuyển</li>
+                        <li>Chính sách bảo mật</li>
                     </ul>
                 </div>
                 <div className="footer-content-right">
