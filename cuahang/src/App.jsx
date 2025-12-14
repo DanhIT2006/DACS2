@@ -8,13 +8,13 @@ import Orders from './pages/Orders/Orders'
 import LoginPopup from './components/LoginPopup/LoginPopup'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
 import StoreContextProvider from './context/StoreContext'
 import ShopProfile from "./pages/ShopProfile/ShopProfile.jsx";
+import AddCoupon from "./pages/AddCoupon/AddCoupon.jsx";
 
 const App = () => {
     const [showLogin, setShowLogin] = useState(false)
-
+    const url = "http://localhost:5000"
     return (
         <StoreContextProvider>
             {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
@@ -29,6 +29,7 @@ const App = () => {
                     <Route path="/list" element={<List />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/shopProfile" element={<ShopProfile />} />
+                    <Route path="/coupon" element={<AddCoupon url={url}/>} />=
                 </Routes>
             </div>
         </StoreContextProvider>

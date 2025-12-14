@@ -3,12 +3,19 @@ import './PlaceOrder.css'
 import { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const PlaceOrder = () => {
 
     const { getTotalCartAmount, token, food_list, cartItems, url, setCartItems } = useContext(StoreContext)
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const discount = location.state.discount || 0;
+
+    const subTotal = getTotalCartAmount();
+    const deliveryFee = subTotal === 0 ? 0 : 20000;
+    const finalTotal = subTotal + deliveryFee - discount > 0 ? subTotal + deliveryFee - discount : 0;
 
     const [data, setData] = useState({
         ho: "",
@@ -61,7 +68,8 @@ const PlaceOrder = () => {
             userId: userId,
             address: data,
             items: orderItems,
-            amount: getTotalCartAmount() + (getTotalCartAmount() === 0 ? 0 : 20000)
+            amount: finalTotal,
+            discount: discount,
         };
 
         try {
@@ -120,17 +128,26 @@ const PlaceOrder = () => {
                     <div>
                         <div className="cart-total-details">
                             <p>Chưa phụ phí</p>
-                            <p>{getTotalCartAmount().toLocaleString('vi-VN')}₫</p>
+                            <p>{subTotal.toLocaleString('vi-VN')}₫</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Phí giao hàng</p>
-                            <p>{(getTotalCartAmount() === 0 ? 0 : 20000).toLocaleString('vi-VN')}₫</p>
+                            <p>{deliveryFee.toLocaleString('vi-VN')}₫</p>
                         </div>
                         <hr />
+                        {discount > 0 && (
+                            <>
+                                <div className="cart-total-details" style={{color: 'green'}}>
+                                    <p>Giảm giá</p>
+                                    <p>- {discount.toLocaleString('vi-VN')}₫</p>
+                                </div>
+                                <hr />
+                            </>
+                        )}
                         <div className="cart-total-details">
                             <b>Tổng tiền</b>
-                            <b>{(getTotalCartAmount() + (getTotalCartAmount() === 0 ? 0 : 20000)).toLocaleString('vi-VN')}₫</b>
+                            <b>{finalTotal.toLocaleString('vi-VN')}₫</b>
                         </div>
                     </div>
                     <button type='submit'>Thanh toán</button>

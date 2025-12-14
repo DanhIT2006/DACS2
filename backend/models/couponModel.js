@@ -17,7 +17,8 @@ const couponSchema = new mongoose.Schema({
     expiryDate: { type: Date, required: true }, // Hạn sử dụng
     usageLimit: { type: Number, default: 100 }, // Số lượng mã (ví dụ chỉ có 100 mã)
     usedCount: { type: Number, default: 0 }, // Số lần đã dùng
-    isActive: { type: Boolean, default: true } // Trạng thái kích hoạt
+    isActive: { type: Boolean, default: true }, // Trạng thái kích hoạt
+    applicableFoods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'food' }],
 });
 
 const couponModel = mongoose.models.coupon || mongoose.model("coupon", couponSchema);

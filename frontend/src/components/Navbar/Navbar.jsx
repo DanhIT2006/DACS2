@@ -152,7 +152,7 @@ const Navbar = ({ setShowLogin }) => {
                     <div className="navbar-profile">
                         <img
                             src={assets.profile_icon}
-                            className="white-filter"
+                            className="profile-img"
                             alt=""
                         />
                         <ul className="nav-profile-dropdown">

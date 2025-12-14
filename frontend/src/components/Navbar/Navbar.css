@@ -62,26 +62,71 @@
 }
 .navbar-profile{
     position: relative;
+    cursor: pointer;
 }
-.nav-profile-dropdown{
+
+
+.navbar-profile:hover .profile-img {
+    transform: scale(1.1);
+}
+
+/* Dropdown */
+.nav-profile-dropdown {
     position: absolute;
-    display: none;
+    top: 100%;
     right: 0;
-    z-index: 1;
-}
-
-.navbar-profile:hover .nav-profile-dropdown{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin-top: 12px;
     background-color: #fff2ef;
-    padding: 12px 25px;
-    border-radius: 4px;
     border: 1px solid tomato;
-    outline: 2px solid white;
+    border-radius: 12px;
+    padding: 16px 0;
+    min-width: 210px;
     list-style: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
 }
 
+/* Hover để hiện dropdown */
+.navbar-profile:hover .nav-profile-dropdown {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.nav-profile-dropdown li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 13px;
+}
+
+.nav-profile-dropdown li img {
+    width: 20px;
+    height: 20px;
+}
+
+.nav-profile-dropdown li:hover {
+    background-color: #ffeae6;
+    color: tomato;
+    border-radius: 8px;
+    margin: 0 8px;
+}
+
+/* Đường kẻ ngang */
+.nav-profile-dropdown hr {
+    border: none;
+    height: 1px;
+    background: #ff8c76;
+    margin: 8px 20px;
+}
 
 :root .navbar-profile:hover .nav-profile-dropdown{
     color: white;
@@ -97,20 +142,6 @@
     outline: 2px solid white;
 }
 
-.nav-profile-dropdown li{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.nav-profile-dropdown img {
-    width: 20px;
-}
-
-.nav-profile-dropdown li:hover{
-    color: tomato;
-}
 
 #visual-toggle-button{
     width: 37px;

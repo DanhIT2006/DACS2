@@ -10,7 +10,7 @@ const createShopCoupon = async (req, res) => {
             return res.json({ success: false, message: "Bạn chưa có cửa hàng!" });
         }
 
-        const { code, discountType, discountValue, minOrderValue, expiryDate, usageLimit } = req.body;
+        const { code, discountType, discountValue, minOrderValue, expiryDate, usageLimit, applicableFoods } = req.body;
 
         const exists = await couponModel.findOne({ code: code.toUpperCase(), shopId: shop._id });
         if (exists) {
@@ -24,7 +24,8 @@ const createShopCoupon = async (req, res) => {
             discountValue,
             minOrderValue,
             expiryDate,
-            usageLimit
+            usageLimit,
+            applicableFoods: applicableFoods || []
         });
 
         await newCoupon.save();
