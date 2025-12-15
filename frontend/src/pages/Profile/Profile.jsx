@@ -3,54 +3,49 @@ import './Profile.css';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
     const { url, token } = useContext(StoreContext);
     const navigate = useNavigate();
 
-    // State để lưu thông tin người dùng
+    // State lưu thông tin hiển thị
     const [userData, setUserData] = useState({
         name: '',
         email: '',
-
-        //thêm
+        role: ''
     });
 
-    // State để theo dõi các thay đổi trong form
+    // State form chỉnh sửa thông tin
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-
-        //thêm
     });
 
-    // State để quản lý trạng thái tải dữ liệu
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    //  State cho đổi mật khẩu
+    const [showPasswordChange, setShowPasswordChange] = useState(false);
+    const [passwordData, setPasswordData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
 
-    // 1. Lấy dữ liệu người dùng khi component được tải
+    const [loading, setLoading] = useState(true);
+
+    // 1. Lấy dữ liệu profile
     const fetchProfileData = async () => {
         if (!token) {
-            navigate('/'); // Chuyển hướng nếu chưa đăng nhập
+            navigate('/');
             return;
         }
-
         try {
-            const response = await axios.get(url + "/api/user/profile", {
-                headers: { token }
-            });
-
+            const response = await axios.get(url + "/api/user/profile", { headers: { token } });
             if (response.data.success) {
-                const data = response.data.data;
-                setUserData(data);
-                // Đặt dữ liệu vào form để có thể chỉnh sửa
-                setFormData({ name: data.name });
-            } else {
-                setError(response.data.message || "Không thể tải thông tin");
+                setUserData(response.data.data);
+                setFormData({ name: response.data.data.name });
             }
         } catch (err) {
-            console.error("Lỗi fetch profile:", err);
-            setError("Lỗi kết nối hoặc Server không phản hồi.");
+            console.error(err);
+            toast.error("Lỗi tải thông tin");
         } finally {
             setLoading(false);
         }
@@ -60,63 +55,82 @@ const Profile = () => {
         fetchProfileData();
     }, [token]);
 
-
-    // 2. Xử lý sự kiện thay đổi Form
-    const onChangeHandler = (event) => {
-        const { name, value } = event.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+    // Xử lý thay đổi input thông tin
+    const onChangeHandler = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
+    // Xử lý thay đổi input mật khẩu
+    const onPasswordChangeHandler = (e) => {
+        const { name, value } = e.target;
+        setPasswordData(prev => ({ ...prev, [name]: value }));
+    }
 
-    // 3. Xử lý cập nhật thông tin
-    const handleUpdate = async (event) => {
-        event.preventDefault();
-
-        if (!token) return;
-
+    // Cập nhật thông tin cơ bản
+    const handleUpdate = async (e) => {
+        e.preventDefault();
         try {
-            const response = await axios.put(url + "/api/user/profile", formData, {
-                headers: { token }
-            });
-
+            const response = await axios.put(url + "/api/user/profile", formData, { headers: { token } });
             if (response.data.success) {
-                alert("Cập nhật thông tin thành công!");
-                // Cập nhật lại userData để giao diện phản ánh thay đổi
-                setUserData(response.data.data);
+                toast.success("Cập nhật thông tin thành công!");
+                setUserData(prev => ({ ...prev, name: formData.name }));
             } else {
-                alert("Lỗi cập nhật: " + (response.data.message || "Không rõ"));
+                toast.error(response.data.message);
             }
         } catch (err) {
-            console.error("Lỗi cập nhật:", err);
-            alert("Lỗi kết nối hoặc Server.");
+            toast.error("Lỗi kết nối server");
         }
     };
 
-    if (loading) {
-        return <div className='profile-page loading'>Đang tải thông tin...</div>;
+    // Xử lý đổi mật khẩu
+    const handleChangePasswordSubmit = async (e) => {
+        e.preventDefault(); // Ngăn reload trang
+
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            toast.error("Mật khẩu xác nhận không khớp!");
+            return;
+        }
+
+        if (passwordData.newPassword.length < 8) {
+            toast.error("Mật khẩu mới phải có ít nhất 8 ký tự");
+            return;
+        }
+
+        try {
+            // Gọi API đổi mật khẩu
+            const response = await axios.post(url + "/api/user/change-password", {
+                oldPassword: passwordData.oldPassword,
+                newPassword: passwordData.newPassword
+            }, { headers: { token } });
+
+            if (response.data.success) {
+                toast.success("Đổi mật khẩu thành công!");
+                setShowPasswordChange(false);
+                setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' });
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response?.data?.message || "Lỗi đổi mật khẩu");
+        }
     }
 
-    if (error) {
-        return <div className='profile-page error'>Lỗi: {error}</div>;
-    }
+    if (loading) return <div className='profile-page loading'>Đang tải...</div>;
 
     return (
         <div className='profile-page'>
             <h2>Thông tin cá nhân</h2>
-            <form onSubmit={handleUpdate} className="profile-container">
 
-                {/* Khu vực hiển thị thông tin không thể thay đổi */}
+            {/* Form cập nhật thông tin cơ bản */}
+            <form onSubmit={handleUpdate} className="profile-container">
                 <div className='profile-info-display'>
                     <p><strong>Email:</strong> {userData.email}</p>
                     <p><strong>Vai trò:</strong> {userData.role === 'shop_owner' ? 'Chủ cửa hàng' : 'Khách hàng'}</p>
                 </div>
-
                 <hr/>
-
-                {/* Khu vực chỉnh sửa thông tin */}
                 <div className='profile-edit-section'>
                     <h3>Chỉnh sửa thông tin cơ bản</h3>
-
                     <label htmlFor="name">Tên của bạn</label>
                     <input
                         id="name"
@@ -124,21 +138,62 @@ const Profile = () => {
                         type="text"
                         value={formData.name}
                         onChange={onChangeHandler}
-                        placeholder='Nhập tên mới'
                         required
                     />
-
-                    {/* Thêm các trường chỉnh sửa địa chỉ, SĐT... nếu cần */}
-
-                    <button type='submit' className='update-button'>
-                        Cập nhật
-                    </button>
-
-                    <button type='button' className='password-button'>
-                        Đổi mật khẩu
-                    </button>
+                    <button type='submit' className='update-button'>Cập nhật thông tin</button>
                 </div>
             </form>
+
+            {/*Khu vực đổi mật khẩu tách riêng */}
+            <div className="profile-edit-section" style={{marginTop: '30px'}}>
+                <button
+                    type='button'
+                    className='password-button'
+                    onClick={() => setShowPasswordChange(!showPasswordChange)}
+                >
+                    {showPasswordChange ? "Hủy đổi mật khẩu" : "Đổi mật khẩu"}
+                </button>
+
+                {showPasswordChange && (
+                    <form onSubmit={handleChangePasswordSubmit} className="password-form" style={{marginTop: '20px', padding: '20px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px'}}>
+                        <h4 style={{marginBottom: '15px'}}>Thiết lập mật khẩu mới</h4>
+
+                        <label>Mật khẩu cũ</label>
+                        <input
+                            type="password"
+                            name="oldPassword"
+                            value={passwordData.oldPassword}
+                            onChange={onPasswordChangeHandler}
+                            required
+                            placeholder="Nhập mật khẩu hiện tại"
+                        />
+
+                        <label>Mật khẩu mới</label>
+                        <input
+                            type="password"
+                            name="newPassword"
+                            value={passwordData.newPassword}
+                            onChange={onPasswordChangeHandler}
+                            required
+                            placeholder="Nhập mật khẩu mới"
+                        />
+
+                        <label>Xác nhận mật khẩu mới</label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            value={passwordData.confirmPassword}
+                            onChange={onPasswordChangeHandler}
+                            required
+                            placeholder="Nhập lại mật khẩu mới"
+                        />
+
+                        <button type="submit" className="update-button" style={{backgroundColor: '#ff6347'}}>
+                            Lưu mật khẩu mới
+                        </button>
+                    </form>
+                )}
+            </div>
         </div>
     );
 };

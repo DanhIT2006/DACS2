@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
+import {toast} from "react-toastify";
 
 const PlaceOrder = () => {
 
@@ -81,15 +82,18 @@ const PlaceOrder = () => {
 
             if (response.data.success) {
                 setCartItems({}); // Xóa giỏ hàng ở frontend
-                alert("Đặt hàng thành công!");
+                toast.success("Đặt hàng thành công! Đang chuyển hướng...",{
+                    autoClose: 2000
+                });
+                setTimeout(() => {
                 navigate("/myorders");
-                window.location.reload();
+            }, 2500);
             } else {
-                alert("Lỗi đặt hàng: " + (response.data.message || "Không rõ"));
+                toast.error("Lỗi đặt hàng: " + (response.data.message || "Không rõ"));
             }
         } catch (err) {
             console.error("Lỗi khi đặt hàng:", err);
-            alert("Lỗi kết nối hoặc server");
+            toast.error("Lỗi kết nối hoặc server");
         }
     }
 

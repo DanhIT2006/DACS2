@@ -49,17 +49,14 @@ const LoginPopup = ({setShowLogin}) => {
       if (payload) {
         if (payload.role === 'user') {
           // CHUYỂN HƯỚNG user đến cổng/đường dẫn quản lý riêng
-          window.location.href = '/user-dashboard'; // Sử dụng đường dẫn tương đối
+          window.location.href = '/user-dashboard';
         } else if (payload.role === 'shop_owner') {
-          // CHUYỂN HƯỚNG shop_owner đến cổng/đường dẫn quản lý riêng
-          window.location.href = '/shopprofile'; // Giữ nguyên đường dẫn đã có sẵn trong Navbar
+          window.location.href = '/shopprofile';
 
         } else {
-          // Trường hợp vai trò khác (admin,...)
           window.location.reload();
         }
       } else {
-        // Nếu không giải mã được payload
         window.location.reload();
       }
     }
@@ -93,7 +90,7 @@ const LoginPopup = ({setShowLogin}) => {
             <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Email' required/>
             <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Mật khẩu' required/>
           </div>
-          <button type='submit'>{currState==="Sign up"?"Tạo tài khoản":"Đăng nhập"}</button>
+          <button type='submit'>{currState==="Login"?"Đăng nhập":"Tạo tài khoản"}</button>
           <div className="login-popup-condition">
             <input type="checkbox" required/>
             <p className='continuee'>Tôi đồng ý với các điều khoản sử dụng và chính sách quyền riêng tư</p>

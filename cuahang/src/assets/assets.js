@@ -5,6 +5,8 @@ import profile_image from './profile_image.png'
 import upload_area from './upload_area.png'
 import parcel_icon from './parcel_icon.png'
 import coupon_icon from './coupon_icon.png'
+import stats_icon from './stats_icon.png'
+
 
 export const assets ={
     logo,
@@ -13,7 +15,8 @@ export const assets ={
     profile_image,
     upload_area,
     parcel_icon,
-    coupon_icon
+    coupon_icon,
+    stats_icon
 }
 
 export const url = 'https://hangry-backend.onrender.com'

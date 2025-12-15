@@ -1,80 +1,79 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useContext, useState } from 'react'
 import './LoginPopup.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 import axios from "axios"
 
-// eslint-disable-next-line react/prop-types
 const LoginPopup = ({setShowLogin}) => {
 
-  const {url,setToken, decodeJWT} = useContext(StoreContext)
+  const {url, setToken, decodeJWT} = useContext(StoreContext)
 
-
-  const [currState,setCurrState] = useState("Login")
-  const [data,setData] = useState({
-    name:"",
-    email:"test@gmail.com",
-    password:"123456789",
-    role:"user"
+  const [currState, setCurrState] = useState("Login")
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "user" // Mặc định là user
   })
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setData(data=>({...data,[name]:value}))
+    setData(data => ({...data, [name]: value}))
   }
-
 
   const onLogin = async (event) => {
     event.preventDefault()
     let newUrl = url;
-    if (currState==="Login"){
+    if (currState === "Login") {
       newUrl += "/api/user/login"
-    }
-    else{
+    } else {
       newUrl += "/api/user/register"
     }
 
-    const response = await axios.post(newUrl,data);
-    console.log("Phản hồi từ backend:", response.data);
+    try {
+      const response = await axios.post(newUrl, data);
+      console.log("Phản hồi:", response.data);
 
-    if (response.data.success){
-      setToken(response.data.token);
-      localStorage.setItem("token",response.data.token)
-      setShowLogin(false)
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setShowLogin(false);
 
-      const payload = decodeJWT(response.data.token);
-
-      if (payload && payload.role === 'shop_owner') {
-        // CHUYỂN HƯỚNG SHOP OWNER đến cổng/đường dẫn quản lý riêng
-        window.location.href = 'http://localhost:5175/shop-dashboard';
-
+        // Kiểm tra role để chuyển hướng
+        const payload = decodeJWT(response.data.token);
+        if (payload && payload.role === 'shop_owner') {
+          // Nếu đang ở trang Admin, reload hoặc chuyển hướng
+          window.location.href = '/stats'; // Hoặc đường dẫn trang admin của bạn
+        } else {
+          window.location.reload();
+        }
       } else {
-        window.location.reload();
+        alert(response.data.message);
       }
-    }
-    else{
-      alert(response.data.message)
+    } catch (error) {
+      console.error("Lỗi đăng nhập:", error);
+      alert("Lỗi kết nối đến Server. Vui lòng kiểm tra lại Backend!");
     }
   }
 
   return (
-    <div className='login-popup'>
+      <div className='login-popup'>
         <form onSubmit={onLogin} className="login-popup-container">
           <div className="login-popup-title">
-            <h2>{currState}</h2>
+            <h2>{currState === "Login" ? "Đăng nhập" : "Đăng ký"}</h2>
             <img onClick={()=>setShowLogin(false)} src={assets.cross_icon} alt="" />
           </div>
+
           <div className="login-popup-inputs">
-            {currState==="Login"?<></>:
+            {currState === "Login" ? <></> :
                 // Form Đăng ký
                 <>
                   <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Tên tài khoản' required/>
-                  {/* Trường chọn Role */}
-                  <label className="role-select-label">
+
+                  <label className="role-select-label" style={{display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '14px'}}>
                     Đăng ký với tư cách:
-                    <select name='role' onChange={onChangeHandler} value={data.role} required>
+                    <select name='role' onChange={onChangeHandler} value={data.role} style={{padding: '8px', border: '1px solid #c9c9c9', borderRadius: '4px'}}>
                       <option value="user">Khách hàng</option>
                       <option value="shop_owner">Chủ cửa hàng</option>
                     </select>
@@ -84,17 +83,23 @@ const LoginPopup = ({setShowLogin}) => {
             <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Email' required/>
             <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Mật khẩu' required/>
           </div>
-          <button type='submit'>{currState==="Sign up"?"Tạo tài khoản":"Đăng ký"}</button>
+
+          {/* --- SỬA LOGIC NÚT BẤM TẠI ĐÂY --- */}
+          <button type='submit'>
+            {currState === "Sign Up" ? "Tạo tài khoản" : "Đăng nhập"}
+          </button>
+
           <div className="login-popup-condition">
             <input type="checkbox" required/>
             <p className='continuee'>Tôi đồng ý với các điều khoản sử dụng và chính sách quyền riêng tư</p>
           </div>
-          {currState==="Login"
-          ?<p>Tạo tài khoản mới? <span onClick={()=>setCurrState("Sign Up")}>Bấm vào đây</span></p>
-          :<p>Đã có tài khoản? <span onClick={()=>setCurrState("Login")}>Đăng nhập</span></p>
+
+          {currState === "Login"
+              ? <p>Chưa có tài khoản? <span onClick={()=>setCurrState("Sign Up")}>Đăng ký ngay</span></p>
+              : <p>Đã có tài khoản? <span onClick={()=>setCurrState("Login")}>Đăng nhập</span></p>
           }
         </form>
-    </div>
+      </div>
   )
 }
 

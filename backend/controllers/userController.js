@@ -65,7 +65,6 @@ const registerUser = async (req, res) => {
 
         const user = await newUser.save();
 
-        // ĐẢM BẢO user._id tồn tại
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || "fallback_secret");
         res.json({ success: true, token });
     } catch (error) {
@@ -75,10 +74,9 @@ const registerUser = async (req, res) => {
 };
 const getUserProfile = async (req, res) => {
     try {
-        // Lấy userId từ token đã được xác thực bởi authMiddleware
+        // Lấy userId từ token
         const userId = req.user.id;
 
-        // Tìm user, nhưng không trả về mật khẩu (select('-password'))
         const user = await userModel.findById(userId).select('-password');
 
         if (!user) {
@@ -96,14 +94,14 @@ const updateProfile = async (req, res) => {
         const userId = req.user.id;
         const updates = req.body;
 
-        // Chỉ cho phép cập nhật tên và các trường không nhạy cảm khác (KHÔNG BAO GỒM EMAIL, PASSWORD, ROLE)
+        // Chỉ cho phép cập nhật tên và các trường
         const updatedUser = await userModel.findByIdAndUpdate(
             userId,
             {
                 name: updates.name,
-                // Thêm các trường địa chỉ
+                // Thêm
             },
-            { new: true, runValidators: true } // new: true để trả về document đã cập nhật
+            { new: true, runValidators: true } //true để trả về document đã cập nhật
         ).select('-password');
 
         if (!updatedUser) {
@@ -116,4 +114,44 @@ const updateProfile = async (req, res) => {
         res.json({ success: false, message: "Lỗi Server: " + error.message });
     }
 };
-export {loginUser,registerUser, getUserProfile, updateProfile}
+const changePassword = async (req, res) => {
+    try {
+        console.log("--- BẮT ĐẦU ĐỔI MẬT KHẨU ---");
+        console.log("req.user:", req.user);
+        console.log("req.body:", req.body);
+        const userId = req.user.id;
+        console.log("UserID lấy được:", userId);
+        if (!userId) {
+            return res.json({ success: false, message: "Lỗi: Không tìm thấy ID từ Token" });
+        }
+        const { oldPassword, newPassword } = req.body;
+
+        console.log("ID từ token:", userId);
+
+        // 1. Tìm user
+        const user = await userModel.findById(userId); // userId lấy từ middleware giải mã token
+        if (!user) {
+            console.log("-> Tìm trong DB không thấy user này!");
+            return res.json({ success: false, message: "User không tồn tại" });
+        }
+
+        console.log("-> Tìm thấy user:", user.email);
+
+        // 2. So sánh mật khẩu cũ
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) return res.json({ success: false, message: "Mật khẩu cũ không đúng!" });
+
+        // 3. Mã hóa mật khẩu mới và lưu
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        await userModel.findByIdAndUpdate(userId, { password: hashedPassword });
+
+        res.json({ success: true, message: "Đổi mật khẩu thành công!" });
+
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi server" });
+    }
+}
+export {loginUser,registerUser, getUserProfile, updateProfile,changePassword}

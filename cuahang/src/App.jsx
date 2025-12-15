@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import StoreContextProvider from './context/StoreContext'
 import ShopProfile from "./pages/ShopProfile/ShopProfile.jsx";
 import AddCoupon from "./pages/AddCoupon/AddCoupon.jsx";
+import ShopStats from "./pages/ShopStats/ShopStats.jsx";
 
 const App = () => {
     const [showLogin, setShowLogin] = useState(false)
@@ -29,7 +30,8 @@ const App = () => {
                     <Route path="/list" element={<List />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/shopProfile" element={<ShopProfile />} />
-                    <Route path="/coupon" element={<AddCoupon url={url}/>} />=
+                    <Route path="/coupon" element={<AddCoupon url={url}/>} />
+                    <Route path="/stats" element={<ShopStats />} />
                 </Routes>
             </div>
         </StoreContextProvider>

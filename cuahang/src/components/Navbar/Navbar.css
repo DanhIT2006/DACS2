@@ -25,6 +25,7 @@
     gap: 30px;
 }
 
+
 /* TOGGLE DARK/LIGHT  */
 #visual-toggle-button{
     width: 37px;
@@ -113,6 +114,7 @@
     right: 0;
     margin-top: 12px;
     background-color: #fff2ef;
+    color: #333333;
     border: 1px solid tomato;
     border-radius: 12px;
     padding: 16px 0;
@@ -155,7 +157,6 @@
     height: 20px;
 }
 
-/* Đường kẻ ngang */
 .nav-profile-dropdown hr {
     border: none;
     height: 1px;
@@ -163,17 +164,22 @@
     margin: 8px 20px;
 }
 
-/* Icon nhỏ trong dropdown */
 .icon-small {
     width: 20px;
     height: 20px;
 }
 
-/* Fix icon bị invert ở light mode */
 .lightcolors .icon-small,
 .lightcolors .profile-img {
     filter: none !important;
 }
+:root .profile-img {
+    filter: invert(1);
+}
+.lightcolors .profile-img {
+    filter: none;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
