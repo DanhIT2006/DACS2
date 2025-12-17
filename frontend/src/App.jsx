@@ -15,6 +15,8 @@ import ScrollToTop  from "./components/ScrollToTop/ScrollToTop.jsx";
 import Profile from './pages/Profile/Profile.jsx'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'leaflet/dist/leaflet.css';
+import TrackOrder from './pages/TrackOrder/TrackOrder';
 
 console.log('%cWhy are you looking at my logs 👀', 'color: #FF5733; font-size: 20px;');
 
@@ -36,6 +38,7 @@ const App = () => {
           <Route path='/myorders' element={<MyOrders />} />
             <Route path='/food/:foodId' element={<FoodDetail />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/track-order/:orderId' element={<TrackOrder />} />
         </Routes>
         <ToastContainer />
       </div>

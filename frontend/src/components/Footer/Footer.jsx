@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import "./Footer.css";
 import { assets } from "../../assets/assets";
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
     useEffect(() => {
         // Ensure the footer logo stays the same for both light and dark modes
         document.querySelector(".tomatologofooter").style.filter = "none";
     }, []);
-
+    const { t } = useTranslation();
     return (
         <div className="footer" id="footer">
             <div className="footer-content">
@@ -31,16 +32,16 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="footer-content-center">
-                    <h2>Công ty</h2>
+                    <h2>{t('company')}</h2>
                     <ul>
-                        <li>Trang chủ</li>
-                        <li>Về chúng tôi</li>
-                        <li>Vận chuyển</li>
-                        <li>Chính sách bảo mật</li>
+                        <li>{t('home_footer')}</li>
+                        <li>{t('about_footer')}</li>
+                        <li>{t('transport')}</li>
+                        <li>{t('privacy_policy')}</li>
                     </ul>
                 </div>
                 <div className="footer-content-right">
-                    <h2>Liên hệ</h2>
+                    <h2>{t('contact_footer')}</h2>
                     <ul>
                         <li>+84865412596</li>
                         <li>danhvt.24it@vku.udn.vn</li>

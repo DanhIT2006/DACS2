@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { formatPrice } from '../../utils/formatPrice'
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import { useTranslation } from 'react-i18next';
 
 const Cart = () => {
 
@@ -12,6 +13,8 @@ const Cart = () => {
     const { cartItems, food_list, removeFromCart, addToCart, getTotalCartAmount, url } = useContext(StoreContext)
 
     const navigate = useNavigate();
+
+    const { t } = useTranslation();
 
     const [promoCode, setPromoCode] = useState("");
     const [discount, setDiscount] = useState(0);
@@ -62,12 +65,12 @@ const Cart = () => {
         <div className='cart'>
             <div className="cart-items">
                 <div className="cart-items-title">
-                    <p>Ảnh</p>
-                    <p>Tên món</p>
-                    <p>Giá</p>
-                    <p>Số lượng</p>
-                    <p>Tổng tiền</p>
-                    <p>Xóa món</p>
+                    <p>{t('img')}</p>
+                    <p>{t('dish_name')}</p>
+                    <p>{t('price')}</p>
+                    <p>{t('quantity')}</p>
+                    <p>{t('total')}</p>
+                    <p>{t('delete_dish')}</p>
                 </div>
                 <br />
                 <hr />
@@ -101,15 +104,15 @@ const Cart = () => {
             </div>
             <div className="cart-bottom">
                 <div className="cart-total">
-                    <h2>Tổng chi phí của giỏ hàng</h2>
+                    <h2>{t('total_cart')}</h2>
                     <div>
                         <div className="cart-total-details">
-                            <p>Chưa phụ phí</p>
+                            <p>{t('price')}</p>
                             <p>{formatPrice(getTotalCartAmount())}</p>
                         </div>
                         <hr/>
                         <div className="cart-total-details">
-                            <p>Phí giao hàng</p>
+                            <p>{t('delivery_fee')}</p>
                             <p>{formatPrice(getTotalCartAmount() === 0 ? 0 : 20000)}</p>
                         </div>
                         <hr/>
@@ -117,30 +120,30 @@ const Cart = () => {
                         {discount > 0 && (
                             <>
                                 <div className="cart-total-details" style={{color: 'green'}}>
-                                    <p>Giảm giá</p>
+                                    <p>{t('discount')}</p>
                                     <p>- {formatPrice(discount)}</p>
                                 </div>
                                 <hr/>
                             </>
                         )}
                         <div className="cart-total-details">
-                            <b>Tổng tiền</b>
+                            <b>{t('total_money')}</b>
                             <b>{formatPrice(finalTotal)}</b>
                         </div>
                     </div>
-                    <button onClick={()=>navigate('/order', { state: { discount: discount } })}>Thanh toán</button>
+                    <button onClick={()=>navigate('/order', { state: { discount: discount } })}>{t('pay')}</button>
                 </div>
                 <div className="cart-promocode">
                     <div>
-                        <p className='promocodep'>Nếu bạn có mã giảm giá. Hãy nhập ở đây</p>
+                        <p className='promocodep'>{t('promocode_title')}</p>
                         <div className='cart-promocode-input'>
                             <input
                                 type="text"
-                                placeholder='Mã giảm giá'
+                                placeholder={t('promocode')}
                                 value={promoCode}
                                 onChange={(e) => setPromoCode(e.target.value)}
                             />
-                            <button onClick={handleApplyPromo}>Áp dụng</button>
+                            <button onClick={handleApplyPromo}>{t('submit')}</button>
                         </div>
                     </div>
                 </div>

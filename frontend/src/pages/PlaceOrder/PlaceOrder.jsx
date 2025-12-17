@@ -65,9 +65,14 @@ const PlaceOrder = () => {
             }
         }
 
+        const fullAddress = `${data.tenDuong}, ${data.phuongXa}, ${data.tinh}`;
+
         let orderData = {
             userId: userId,
-            address: data,
+            address: {
+                ...data,
+                full_address: fullAddress
+            },
             items: orderItems,
             amount: finalTotal,
             discount: discount,
@@ -81,7 +86,7 @@ const PlaceOrder = () => {
             console.log("Response từ backend:", response.data);
 
             if (response.data.success) {
-                setCartItems({}); // Xóa giỏ hàng ở frontend
+                setCartItems({}); // Xóa giỏ hàng ở khachhang
                 toast.success("Đặt hàng thành công! Đang chuyển hướng...",{
                     autoClose: 2000
                 });

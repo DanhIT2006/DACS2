@@ -11,9 +11,6 @@ import commentRouter from "./routes/commentRoute.js";
 import shopRouter from "./routes/shopRoute.js";
 import couponRouter from "./routes/couponRoute.js";
 
-
-
-
 // app config
 const app = express()
 const port = process.env.PORT || 5000

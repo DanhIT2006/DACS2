@@ -84,15 +84,13 @@ const listOrders = async (req,res) => {
 
 
 // update order status
-const updateStatus = async (req,res) => {
+const updateStatus = async (req, res) => {
     try {
-        await orderModel.findByIdAndUpdate(req.body.orderId, {
-            status: req.body.status
-        });
-        return res.json({ success: true, message: "Status Updated" });
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        res.json({success: true, message: "Đã cập nhật trạng thái!"});
     } catch (error) {
         console.log(error);
-        return res.json({ success: false, message: "Error" });
+        res.json({success: false, message: "Lỗi cập nhật"});
     }
 }
 

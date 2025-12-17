@@ -1,14 +1,15 @@
 import React from 'react'
 import './Header.css'
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
+    const { t } = useTranslation();
   return (
     <div className='header'>
         <div className="header-contents">
-            <h2>Đặt món ăn yêu thích của bạn tại đây</h2>
-            <p>Chọn từ thực đơn đa dạng bao gồm một loạt các món ăn ngon được chế biến từ những nguyên liệu tốt nhất,
-                thỏa mãn cơn thèm ăn và nâng cao trải nghiệm ăn uống của bạn, mỗi lần một bữa ăn ngon.</p>
-            <a href="#explore-menu"><button className='buttonwl'>Xem Menu</button></a>
+            <h2>{t('title_header')}</h2>
+            <p>{t("header_desc")}</p>
+            <a href="#explore-menu"><button className='buttonwl'>{t('view_menu')}</button></a>
         </div>
     </div>
   )

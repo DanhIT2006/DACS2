@@ -3,14 +3,28 @@ import './MyOrders.css'
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { assets } from '../../assets/assets';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 
 
     const MyOrders = () => {
-
+        const navigate = useNavigate();
     const { url, token } = useContext(StoreContext);
     const [data, setData] = useState([]);
 
-    const fetchOrders = async () => {
+        const { t } = useTranslation();
+
+        // Map từ dữ liệu DB -> Key trong i18n
+        const statusMap = {
+            "Đang xử lý": "status_processing",
+            "Đang chế biến": "status_cooking",
+            "Đang giao hàng": "status_shipping",
+            "Đã giao hàng": "status_delivered",
+            "Đã hủy": "status_cancelled"
+        };
+
+        const fetchOrders = async () => {
         if (!token) return;
         try {
             const response = await axios.post(url + "/api/order/userorders", {}, {
@@ -48,7 +62,7 @@ import { assets } from '../../assets/assets';
 
     return (
         <div className='my-orders'>
-            <h2 className='myordersp'>Đơn hàng của tôi</h2>
+            <h2 className='myordersp'>{t('myorder_title')}</h2>
             <div className="container">
                 {data.map((order, index) => (
                     <div key={index} className='my-orders-order'>
@@ -63,9 +77,10 @@ import { assets } from '../../assets/assets';
                             })}
                         </p>
                         <p>{order.amount.toLocaleString('vi-VN')}₫</p>
-                        <p>Số lượng: {order.items.length}</p>
-                        <p><span>&#x25cf;</span> <b>{order.status}</b></p>
-                        <button onClick={fetchOrders}>Theo dõi</button>
+                        <p>{t('quantity_order')} {order.items.length}</p>
+                        <p><span>&#x25cf;</span> <b>{t(statusMap[order.status] || order.status)}</b></p>                        <button onClick={() => navigate(`/track-order/${order._id}`)}>
+                        {t('track_order')}
+                        </button>
                     </div>
                 ))}
             </div>

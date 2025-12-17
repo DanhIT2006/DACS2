@@ -52,34 +52,34 @@ export const assets = {
 
 export const menu_list = [
     {
-        menu_name: "Mì",
+        menu_name: "noodles",
         menu_image: menu_1
     },
     {
-        menu_name: "Cơm",
+        menu_name: "rice",
         menu_image: menu_2
     },
     {
-        menu_name: "Bánh mì",
+        menu_name: "bread",
         menu_image: menu_3
     },
     {
-        menu_name: "Món nướng",
+        menu_name: "grilled_dishes",
         menu_image: menu_4
     },
     {
-        menu_name: "Lẩu",
+        menu_name: "hot_pot",
         menu_image: menu_5
     },
     {
-        menu_name: "Đồ uống",
+        menu_name: "drink",
         menu_image: menu_6
     },
     {
-        menu_name: "Ăn vặt",
+        menu_name: "snacks",
         menu_image: menu_7
     },
     {
-        menu_name: "Món Healthy",
+        menu_name: "healthy_food",
         menu_image: menu_8
     }]

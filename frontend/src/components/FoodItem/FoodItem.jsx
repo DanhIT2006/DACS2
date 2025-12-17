@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { formatPrice } from '../../utils/formatPrice'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function FoodItem ({id,name,price,description,image, shopName}) {
     const {cartItems = {},addToCart,removeFromCart,url} = useContext(StoreContext);
@@ -19,7 +20,7 @@ function FoodItem ({id,name,price,description,image, shopName}) {
         // Chuyển hướng đến trang chi tiết món ăn
         navigate(`/food/${id}`);
     };
-
+    const { t } = useTranslation();
     return (
         <div className='food-item' onClick={handleItemClick}>
             <div className="food-item-img-container">
@@ -40,7 +41,7 @@ function FoodItem ({id,name,price,description,image, shopName}) {
                 </div>
                 {shopName && (
                     <p className="food-item-shop-name" style={{fontSize: '15px', color: '#ff6347', fontWeight: 'bold', marginBottom: '5px'}}>
-                        🏡 Cửa hàng: {shopName}
+                        🏡 {t('store')}: {shopName}
                     </p>
                 )}
                 <p className="food-item-desc">{description}</p>

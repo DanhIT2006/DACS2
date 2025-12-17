@@ -4,10 +4,15 @@ import { toast } from "react-toastify"
 import axios from "axios"
 import { assets } from "../../assets/assets"
 import { StoreContext } from '../../context/StoreContext';
+import { useTranslation } from 'react-i18next';
+
 
 const Orders = () => {
   const { url, token } = useContext(StoreContext); // Lấy thêm token
   const [orders, setOrders] = useState([]);
+
+  const { t } = useTranslation();
+
 
   //Lấy ID Shop mình & Lấy danh sách đơn hàng rồi lọc
   const fetchAndFilterOrders = async () => {
@@ -71,7 +76,7 @@ const Orders = () => {
 
   return (
       <div className='order add'>
-        <h3>Đơn Hàng Của Quán</h3>
+        <h3>{t('shop_orders')}</h3>
         <div className="order-list">
           {orders.length > 0 ? (
               orders.map((order, index) => (
@@ -93,20 +98,20 @@ const Orders = () => {
                         <p>{order.address.tinh + ", " + order.address.phone}</p>
                       </div>
                     </div>
-                    <p>SL món: {order.items.length}</p>
+                    <p>{t('sl_mon')} {order.items.length}</p>
                     <p>{order.amount.toLocaleString('vi-VN')}₫</p>
 
                     <select onChange={(event) => statusHandler(event, order._id)} value={order.status}>
-                      <option value="Đang xử lý">Đang xử lý</option>
-                      <option value="Đang chế biến">Đang chế biến</option>
-                      <option value="Đang giao hàng">Đang giao hàng</option>
-                      <option value="Đã giao hàng">Đã giao hàng</option>
-                      <option value="Đã hủy">Đã hủy</option>
+                      <option value="Đang xử lý">{t('status_processing')}</option>
+                      <option value="Đang chế biến">{t('status_cooking')}</option>
+                      <option value="Đang giao hàng">{t('status_shipping')}</option>
+                      <option value="Đã giao hàng">{t('status_delivered')}</option>
+                      <option value="Đã hủy">{t('status_cancelled')}</option>
                     </select>
                   </div>
               ))
           ) : (
-              <p>Chưa có đơn hàng nào.</p>
+              <p>{t('no_order')}</p>
           )}
         </div>
       </div>

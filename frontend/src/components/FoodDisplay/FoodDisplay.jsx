@@ -2,14 +2,15 @@ import React, { useContext } from 'react'
 import './FoodDisplay.css'
 import { StoreContext } from '../../context/StoreContext'
 import FoodItem from '../FoodItem/FoodItem'
+import { useTranslation } from 'react-i18next';
 
 const FoodDisplay = ({category}) => {
 
     const {food_list} = useContext(StoreContext)
-
+    const { t } = useTranslation();
   return (
     <div className='food-display' id='food-display'>
-        <h2 className='h2we'>Tất cả món ăn</h2>
+        <h2 className='h2we'>{t('display_title')}</h2>
         <div className="food-display-list">
             {food_list
                 .filter(item => category === "All" || category === item.category)

@@ -4,10 +4,13 @@ import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
     const { url, token } = useContext(StoreContext);
     const navigate = useNavigate();
+
+    const { t } = useTranslation();
 
     // State lưu thông tin hiển thị
     const [userData, setUserData] = useState({
@@ -118,20 +121,21 @@ const Profile = () => {
 
     if (loading) return <div className='profile-page loading'>Đang tải...</div>;
 
+
     return (
         <div className='profile-page'>
-            <h2>Thông tin cá nhân</h2>
+            <h2>{t('profile_title')}</h2>
 
             {/* Form cập nhật thông tin cơ bản */}
             <form onSubmit={handleUpdate} className="profile-container">
                 <div className='profile-info-display'>
                     <p><strong>Email:</strong> {userData.email}</p>
-                    <p><strong>Vai trò:</strong> {userData.role === 'shop_owner' ? 'Chủ cửa hàng' : 'Khách hàng'}</p>
+                    <p><strong>{t('role')}:</strong> {userData.role === 'shop_owner' ? t('shop_owner') : t('customer')}</p>
                 </div>
                 <hr/>
                 <div className='profile-edit-section'>
-                    <h3>Chỉnh sửa thông tin cơ bản</h3>
-                    <label htmlFor="name">Tên của bạn</label>
+                    <h3>{t('fix')}</h3>
+                    <label htmlFor="name">{t('name')}</label>
                     <input
                         id="name"
                         name="name"
@@ -140,7 +144,7 @@ const Profile = () => {
                         onChange={onChangeHandler}
                         required
                     />
-                    <button type='submit' className='update-button'>Cập nhật thông tin</button>
+                    <button type='submit' className='update-button'>{t('update')}</button>
                 </div>
             </form>
 
@@ -151,45 +155,45 @@ const Profile = () => {
                     className='password-button'
                     onClick={() => setShowPasswordChange(!showPasswordChange)}
                 >
-                    {showPasswordChange ? "Hủy đổi mật khẩu" : "Đổi mật khẩu"}
+                    {showPasswordChange ? t('cancel_password') : t('change_password')}
                 </button>
 
                 {showPasswordChange && (
                     <form onSubmit={handleChangePasswordSubmit} className="password-form" style={{marginTop: '20px', padding: '20px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px'}}>
-                        <h4 style={{marginBottom: '15px'}}>Thiết lập mật khẩu mới</h4>
+                        <h4 style={{marginBottom: '15px'}}>{t('set_password')}</h4>
 
-                        <label>Mật khẩu cũ</label>
+                        <label>{t('old_password')}</label>
                         <input
                             type="password"
                             name="oldPassword"
                             value={passwordData.oldPassword}
                             onChange={onPasswordChangeHandler}
                             required
-                            placeholder="Nhập mật khẩu hiện tại"
+                            placeholder={t('enter_oldpassword')}
                         />
 
-                        <label>Mật khẩu mới</label>
+                        <label>{t('new_password')}</label>
                         <input
                             type="password"
                             name="newPassword"
                             value={passwordData.newPassword}
                             onChange={onPasswordChangeHandler}
                             required
-                            placeholder="Nhập mật khẩu mới"
+                            placeholder={t('enter_newpassword')}
                         />
 
-                        <label>Xác nhận mật khẩu mới</label>
+                        <label>{t('confirm_newpassword')}</label>
                         <input
                             type="password"
                             name="confirmPassword"
                             value={passwordData.confirmPassword}
                             onChange={onPasswordChangeHandler}
                             required
-                            placeholder="Nhập lại mật khẩu mới"
+                            placeholder={t('enter_confirm')}
                         />
 
                         <button type="submit" className="update-button" style={{backgroundColor: '#ff6347'}}>
-                            Lưu mật khẩu mới
+                            {t('save_password')}
                         </button>
                     </form>
                 )}
