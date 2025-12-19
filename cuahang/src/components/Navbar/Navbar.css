@@ -169,6 +169,46 @@
     height: 20px;
 }
 
+.language-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    transition: 0.3s;
+    color: #49557e;
+}
+
+:root .lang-btn, :root .lang-divider {
+    color: #ffffff;
+}
+
+.lightcolors .lang-btn, .lightcolors .lang-divider {
+    color: #49557e;
+}
+
+.lang-btn:hover {
+    color: tomato;
+}
+
+.lang-btn.active-lang {
+    color: tomato;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.lang-divider {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
 .lightcolors .icon-small,
 .lightcolors .profile-img {
     filter: none !important;

@@ -93,6 +93,62 @@
     cursor: pointer;
 }
 
+.payment-method-selection {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.payment-options {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.payment-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 2px solid #ececec;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #fff;
+}
+
+.payment-option img {
+    width: 30px;
+    margin-bottom: 8px;
+}
+
+.payment-option span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Khi được chọn */
+.payment-option.active {
+    border-color: tomato;
+    background-color: #fff5f3;
+}
+
+.payment-option.active span {
+    color: tomato;
+}
+
+/* Dark mode support */
+:root .payment-option {
+    background-color: #242020;
+    border-color: #444;
+    color: white;
+}
+:root .payment-option.active {
+    border-color: tomato;
+    background-color: #33211e;
+}
+
 
 :root .cart-items-title {
     color: white;

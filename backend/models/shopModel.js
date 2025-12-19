@@ -5,7 +5,7 @@ const shopSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, // Liên kết với ID của chủ cửa hàng
         ref: 'users', // Tham chiếu đến userModel
         required: true,
-        unique: true // Mỗi user chỉ có một hồ sơ cửa hàng
+        unique: true
     },
     shopName: {
         type: String,

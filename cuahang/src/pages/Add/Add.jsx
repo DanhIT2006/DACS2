@@ -4,16 +4,21 @@ import { assets } from '../../assets/assets'
 import axios from "axios"
 import { toast } from 'react-toastify'
 import { StoreContext } from '../../context/StoreContext';
+import { useTranslation } from 'react-i18next';
+
 
 const Add = () => {
     const { url, token } = useContext(StoreContext);
+
+    const { t } = useTranslation();
+
 
     const [image,setImage] = useState(false);
     const [data,setData] = useState({
         name:"",
         description:"",
         price:"",
-        category:"Mì"
+        category:"noodles"
     })
 
     const onChangeHandler = (event) => {
@@ -36,7 +41,7 @@ const Add = () => {
                 name:"",
                 description:"",
                 price:"",
-                category:"Mì"
+                category:"noodles"
             })
             setImage(false)
             toast.success(response.data.message)
@@ -51,7 +56,7 @@ const Add = () => {
     <div className='add'>
         <form className='flex-col' onSubmit={onSubmitHandler}>
             <div className="add-img-upload flex-col">
-                <p>Tải ảnh lên</p>
+                <p>{t('upload_img')}</p>
                 <label htmlFor="image">
                     <img className='image' src={image?URL.createObjectURL(image):assets.upload_area} alt="" />
                 </label>
@@ -59,29 +64,29 @@ const Add = () => {
 
             </div>
             <div className="add-product-name flex-col">
-                <p>Tên món</p>
-                <input onChange={onChangeHandler} value={data.name} type="text" name='name' placeholder='Type here' />
+                <p>{t('name_dish')}</p>
+                <input onChange={onChangeHandler} value={data.name} type="text" name='name' placeholder={t('plc1')} />
             </div>
             <div className="add-product-description flex-col">
-                <p>Mô tả</p>
-                <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder='Write content here' required></textarea>
+                <p>{t('description_dish')}</p>
+                <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder={t('plc2')} required></textarea>
             </div>
             <div className="add-category-price">
                 <div className="add-category flex-col">
-                    <p>Thực đơn</p>
+                    <p>{t('catetory')}</p>
                     <select className='selectt' onChange={onChangeHandler} name="category">
-                        <option value="Mì">Mì</option>
-                        <option value="Cơm">Cơm</option>
-                        <option value="Bánh mì">Bánh mì</option>
-                        <option value="Món nướng">Món nướng</option>
-                        <option value="Lẩu">Lẩu</option>
-                        <option value="Đồ uống">Đồ uống</option>
-                        <option value="Ăn vặt">Ăn vặt</option>
-                        <option value="Món Healthy">Món Healthy</option>
+                        <option value="noodles">{t('noodles')}</option>
+                        <option value="rice">{t('rice')}</option>
+                        <option value="bread">{t('bread')}</option>
+                        <option value="grilled_dishes">{t('grilled_dishes')}</option>
+                        <option value="hot_pot">{t('hot_pot')}</option>
+                        <option value="drink">{t('drink')}</option>
+                        <option value="snacks">{t('snacks')}</option>
+                        <option value="healthy_food">{t('healthy_food')}</option>
                     </select>
                 </div>
                 <div className="add-price flex-col">
-                    <p>Giá món</p>
+                    <p>{t('price_dish')}</p>
                     <input
                         type="number"
                         name='price'
@@ -90,11 +95,11 @@ const Add = () => {
                         onChange={onChangeHandler}
                     />
                     <p style={{marginTop: '8px', fontWeight: 'bold', color: '#e74c3c'}}>
-                        Giá: {data.price ? Number(data.price).toLocaleString('vi-VN') + '₫' : '0₫'}
+                        {t('price')} {data.price ? Number(data.price).toLocaleString('vi-VN') + '₫' : '0₫'}
                     </p>
                 </div>
             </div>
-            <button type='submit' className='add-btn'>Thêm</button>
+            <button type='submit' className='add-btn'>{t('add')}</button>
         </form>
     </div>
   )

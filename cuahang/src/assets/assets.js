@@ -18,5 +18,3 @@ export const assets ={
     coupon_icon,
     stats_icon
 }
-
-export const url = 'https://hangry-backend.onrender.com'

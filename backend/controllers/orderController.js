@@ -23,6 +23,17 @@ const placeOrder = async (req, res) => {
         await newOrder.save();
         console.log("Order saved id:", newOrder._id);
 
+        // Lấy thông tin địa chỉ từ body gửi lên
+        const addr = req.body.address;
+        await userModel.findByIdAndUpdate(req.body.userId, {
+            ho: addr.ho,
+            name: addr.ten,
+            phone: addr.phone,
+            tinh: addr.tinh,
+            phuongXa: addr.phuongXa,
+            tenDuong: addr.tenDuong
+        });
+
         try {
             await userModel.findByIdAndUpdate(userId, { cartData: {} });
             console.log("Cart cleared for user:",userId);

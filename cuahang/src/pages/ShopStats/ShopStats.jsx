@@ -2,55 +2,64 @@ import React from 'react'
 import './ShopStats.css'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { assets } from '../../assets/assets';
+import { useTranslation } from 'react-i18next';
 
 const ShopStats = () => {
+    const { t, i18n } = useTranslation(); // Khởi tạo i18n
 
-    // Dữ liệu giả lập
     const data = [
-        { name: 'T2', doanhThu: 4000000, donHang: 24, khachMoi: 5 },
-        { name: 'T3', doanhThu: 3000000, donHang: 18, khachMoi: 3 },
-        { name: 'T4', doanhThu: 2500000, donHang: 15, khachMoi: 2 },
-        { name: 'T5', doanhThu: 2780000, donHang: 20, khachMoi: 6 },
-        { name: 'T6', doanhThu: 1890000, donHang: 12, khachMoi: 1 },
-        { name: 'T7', doanhThu: 6390000, donHang: 40, khachMoi: 10 },
-        { name: 'CN', doanhThu: 7490000, donHang: 45, khachMoi: 12 },
+        { name: t('monday_short'), doanhThu: 4000000, donHang: 24, khachMoi: 5 },
+        { name: t('tuesday_short'), doanhThu: 3000000, donHang: 18, khachMoi: 3 },
+        { name: t('wednesday_short'), doanhThu: 2500000, donHang: 15, khachMoi: 2 },
+        { name: t('thursday_short'), doanhThu: 2780000, donHang: 20, khachMoi: 6 },
+        { name: t('friday_short'), doanhThu: 1890000, donHang: 12, khachMoi: 1 },
+        { name: t('saturday_short'), doanhThu: 6390000, donHang: 40, khachMoi: 10 },
+        { name: t('sunday_short'), doanhThu: 7490000, donHang: 45, khachMoi: 12 },
     ];
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat(i18n.language === 'vi' ? 'vi-VN' : 'en-US', {
+            style: 'currency',
+            currency: i18n.language === 'vi' ? 'VND' : 'USD',
+        }).format(i18n.language === 'vi' ? value : value / 25000);
+    };
 
     return (
         <div className='shop-stats'>
             <div className="stats-header">
                 <img src={assets.stats_icon} alt="" style={{width: '40px'}} />
-                <h2 className='stats-title'>Thống Kê Kinh Doanh</h2>
+                <h2 className='stats-title'>{t('business_stats_title')}</h2>
             </div>
 
             <div className="stats-cards">
                 <div className="card">
                     <div className="card-info">
-                        <h3>27,550,000₫</h3>
-                        <p>Tổng doanh thu tuần</p>
+                        <h3>{formatCurrency(27550000)}</h3>
+                        <p>{t('total_weekly_revenue')}</p>
                     </div>
                 </div>
             </div>
 
             <div className="stats-charts">
-                {/* Biểu đồ Cột (BarChart) - Doanh thu */}
                 <div className="chart-container">
-                    <h3>Doanh thu tuần qua</h3>
+                    <h3>{t('revenue_last_week')}</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
-                            <YAxis width={60} tickFormatter={(value) => (value / 1000000) + 'tr'} />
-                            <Tooltip formatter={(value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value)} />
+                            <YAxis
+                                width={60}
+                                tickFormatter={(value) => i18n.language === 'vi' ? (value / 1000000) + 'tr' : (value / 25000 / 1000).toFixed(1) + 'k'}
+                            />
+                            <Tooltip formatter={(value) => formatCurrency(value)} />
                             <Legend />
-                            <Bar dataKey="doanhThu" name="Doanh Thu" fill="#ff6347" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="doanhThu" name={t('revenue_label')} fill="#ff6347" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
 
-                {/* 2. SỬ DỤNG LINECHART & LINE: Biểu đồ xu hướng đơn hàng */}
                 <div className="chart-container" style={{marginTop: '20px'}}>
-                    <h3>Xu hướng đơn hàng & Khách mới</h3>
+                    <h3>{t('order_trend_title')}</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -58,8 +67,8 @@ const ShopStats = () => {
                             <YAxis width={40} />
                             <Tooltip />
                             <Legend />
-                            <Line type="monotone" dataKey="donHang" name="Đơn hàng" stroke="#8884d8" activeDot={{ r: 8 }} />
-                            <Line type="monotone" dataKey="khachMoi" name="Khách mới" stroke="#82ca9d" />
+                            <Line type="monotone" dataKey="donHang" name={t('orders_label')} stroke="#8884d8" activeDot={{ r: 8 }} />
+                            <Line type="monotone" dataKey="khachMoi" name={t('new_customers_label')} stroke="#82ca9d" />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>

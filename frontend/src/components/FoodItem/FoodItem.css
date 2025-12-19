@@ -99,6 +99,33 @@
     width: 30px;
 }
 
+.food-item-price-address {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 5px;
+}
+.food-item-price {
+    color: tomato;
+    font-size: 20px;
+    font-weight: 500;
+}
+.food-item-address {
+    font-size: 14px;
+    color: #676767;
+    max-width: 55%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+:root .food-item-address {
+    color: #b3b3b3;
+}
+.lightcolors .food-item-address {
+    color: #676767;
+}
+
 /* --- DARK MODE & COLOR SETTINGS --- */
 :root .cartitemsp,
 :root .food-item-price,

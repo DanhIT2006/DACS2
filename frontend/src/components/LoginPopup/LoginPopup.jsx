@@ -10,10 +10,11 @@ const LoginPopup = ({setShowLogin}) => {
 
   const [currState, setCurrState] = useState("Login")
   const [data, setData] = useState({
+    ho:"",
     name: "",
     email: "",
     password: "",
-    role: "user" // Mặc định là user
+    role: "user"
   })
 
   const onChangeHandler = (event) => {
@@ -43,8 +44,7 @@ const LoginPopup = ({setShowLogin}) => {
         // Kiểm tra role để chuyển hướng
         const payload = decodeJWT(response.data.token);
         if (payload && payload.role === 'shop_owner') {
-          // Nếu đang ở trang Admin, reload hoặc chuyển hướng
-          window.location.href = '/stats'; // Hoặc đường dẫn trang admin của bạn
+          window.location.href = '/stats';
         } else {
           window.location.reload();
         }
@@ -69,7 +69,8 @@ const LoginPopup = ({setShowLogin}) => {
             {currState === "Login" ? <></> :
                 // Form Đăng ký
                 <>
-                  <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Tên tài khoản' required/>
+                  <input name='ho' onChange={onChangeHandler} value={data.ho} type="text" placeholder='Họ' required/>
+                  <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Tên' required/>
 
                   <label className="role-select-label" style={{display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '14px'}}>
                     Đăng ký với tư cách:
@@ -84,7 +85,6 @@ const LoginPopup = ({setShowLogin}) => {
             <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Mật khẩu' required/>
           </div>
 
-          {/* --- SỬA LOGIC NÚT BẤM TẠI ĐÂY --- */}
           <button type='submit'>
             {currState === "Sign Up" ? "Tạo tài khoản" : "Đăng nhập"}
           </button>

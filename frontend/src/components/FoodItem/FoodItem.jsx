@@ -8,7 +8,7 @@ import { formatPrice } from '../../utils/formatPrice'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-function FoodItem ({id,name,price,description,image, shopName}) {
+function FoodItem ({id,name,price,description,image, shopName, shopAddress}) {
     const {cartItems = {},addToCart,removeFromCart,url} = useContext(StoreContext);
     const navigate = useNavigate();
 
@@ -45,7 +45,14 @@ function FoodItem ({id,name,price,description,image, shopName}) {
                     </p>
                 )}
                 <p className="food-item-desc">{description}</p>
-                <p className="food-item-price">{formatPrice(price)}</p>
+                <div className="food-item-price-address">
+                    <p className="food-item-price">{formatPrice(price)}</p>
+                    {shopAddress && (
+                        <p className="food-item-address">
+                            📍 {shopAddress}
+                        </p>
+                    )}
+                </div>
             </div>
         </div>
     )

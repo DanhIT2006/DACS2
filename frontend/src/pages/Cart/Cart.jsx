@@ -6,10 +6,13 @@ import { formatPrice } from '../../utils/formatPrice'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import { useTranslation } from 'react-i18next';
+import {assets} from "../../assets/assets.js";
+
 
 const Cart = () => {
 
-    // 1. Thêm addToCart vào để dùng cho nút tăng số lượng
+    const [paymentMethod, setPaymentMethod] = useState("cod");
+
     const { cartItems, food_list, removeFromCart, addToCart, getTotalCartAmount, url } = useContext(StoreContext)
 
     const navigate = useNavigate();
@@ -131,7 +134,38 @@ const Cart = () => {
                             <b>{formatPrice(finalTotal)}</b>
                         </div>
                     </div>
-                    <button onClick={()=>navigate('/order', { state: { discount: discount } })}>{t('pay')}</button>
+
+                    {/*chọn phương thức*/}
+                    <div className="payment-method-selection">
+                        <p className='promocodep'>{t('select_payment_method')}</p>
+                        <div className="payment-options">
+                            <div
+                                className={`payment-option ${paymentMethod === 'cod' ? 'active' : ''}`}
+                                onClick={() => setPaymentMethod('cod')}
+                            >
+                                <img src={assets.cash_icon} alt="" />
+                                <span>{t('cash_on_delivery')}</span>
+                            </div>
+                            <div
+                                className={`payment-option ${paymentMethod === 'qr' ? 'active' : ''}`}
+                                onClick={() => setPaymentMethod('qr')}
+                            >
+                                <img src={assets.qr_icon} alt="" />
+                                <span>{t('qr_payment')}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => {
+                            if (getTotalCartAmount() === 0) {
+                                toast.error("Vui lòng thêm món ăn vào giỏ hàng trước khi thanh toán!");
+                            } else {
+                                navigate('/order', { state: { discount: discount, paymentMethod: paymentMethod } });
+                            }
+                        }}
+                    >
+                        {t('pay')}
+                    </button>
                 </div>
                 <div className="cart-promocode">
                     <div>

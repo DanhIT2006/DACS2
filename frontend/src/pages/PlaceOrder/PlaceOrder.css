@@ -1,20 +1,20 @@
-.place-order{
+.place-order {
     display: flex;
     align-items: start;
     justify-content: space-between;
     gap: 50px;
     margin-top: 100px;
 }
-.place-order-left{
+.place-order-left {
     width: 100%;
     max-width: max(30%, 500px);
 }
-.place-order-left .title{
+.place-order-left .title {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 50px;
 }
-.place-order-left input{
+.place-order-left input {
     margin-bottom: 15px;
     width: 100%;
     padding: 10px;
@@ -22,100 +22,62 @@
     border-radius: 4px;
     outline-color: tomato;
 }
-.place-order-left .multi-fields{
+.place-order-left .multi-fields {
     display: flex;
     gap: 10px;
 }
-.place-order-right{
+.place-order-right {
     width: 100%;
     max-width: max(40%, 500px);
 }
-.place-order .cart-total button{
-    margin-top: 30px;
+
+/* STYLING CHO MODAL QR */
+.qr-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 10000;
 }
-
-/* DARK MODE STYLING (:root) */
-
-/* 1. Tiêu đề */
-:root .title {
-    color: white;
+.qr-modal {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    color: #333;
 }
+.qr-image {
+    width: 250px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+}
+.qr-btns {
+    display: flex;
+    gap: 10px;
+}
+.qr-btns button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.cancel-btn { background: #eee; border: none; }
+.confirm-btn { background: tomato; color: white; border: none; }
 
-/* 2. Style chung cho TẤT CẢ INPUTS */
+/* DARK MODE SUPPORT */
+:root .title { color: white; }
 :root .place-order-left input {
-    background-color: black !important;
-    color: white !important;
-    border: 1px solid #777;
+    background-color: #1a1a1a;
+    color: white;
+    border: 1px solid #444;
 }
+:root .cart-total { color: white; }
 
-/* 3. Style Placeholder */
-/* Quy tắc chung */
-:root .place-order-left input::placeholder {
-    color: white !important;
-    opacity: 0.7;
-}
-/* Vendor Prefixes */
-:root .place-order-left input::-webkit-input-placeholder {
-    color: white !important;
-    opacity: 0.7;
-}
-:root .place-order-left input:-ms-input-placeholder {
-    color: white !important;
-    opacity: 0.7;
-}
-:root .place-order-left input::-moz-placeholder {
-    color: white !important;
-    opacity: 0.7;
-}
-
-
-/* LIGHT MODE STYLING */
-/* 1. Tiêu đề */
-.lightcolors .title {
-    color: black;
-}
-
-/* 2. Style chung cho TẤT CẢ INPUTS  */
+.lightcolors .title { color: black; }
 .lightcolors .place-order-left input {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #ccc;
-}
-
-/* 3. Style Placeholder
-
-.lightcolors .place-order-left input::placeholder {
-    color: black !important;
-    opacity: 0.5;
-}
-/* Vendor Prefixes */
-.lightcolors .place-order-left input::-webkit-input-placeholder {
-    color: black !important;
-    opacity: 0.5;
-}
-.lightcolors .place-order-left input:-ms-input-placeholder {
-    color: black !important;
-    opacity: 0.5;
-}
-.lightcolors .place-order-left input::-moz-placeholder {
-    color: black !important;
-    opacity: 0.5;
-}
-
-:root .multi-fields input {
-    background-color: black;
-    color: white;
-}
-
-:root .multi-fields input::placeholder {
-    color: white;
-}
-
-
-.lightcolors .multi-fields input {
     background-color: white;
     color: black;
-}
-.lightcolors .multi-fields input::placeholder {
-    color: black;
+    border: 1px solid #ccc;
 }

@@ -14,7 +14,12 @@ const Profile = () => {
 
     // State lưu thông tin hiển thị
     const [userData, setUserData] = useState({
+        ho: '',
         name: '',
+        phone: '',
+        tinh: '',
+        phuongXa: '',
+        tenDuong: '',
         email: '',
         role: ''
     });
@@ -43,8 +48,17 @@ const Profile = () => {
         try {
             const response = await axios.get(url + "/api/user/profile", { headers: { token } });
             if (response.data.success) {
-                setUserData(response.data.data);
-                setFormData({ name: response.data.data.name });
+                const data = response.data.data;
+                setUserData(data);
+                // KHỞI TẠO ĐẦY ĐỦ CÁC TRƯỜNG CHO FORM
+                setFormData({
+                    ho: data.ho || '',
+                    name: data.name || '',
+                    phone: data.phone || '',
+                    tinh: data.tinh || '',
+                    phuongXa: data.phuongXa || '',
+                    tenDuong: data.tenDuong || ''
+                });
             }
         } catch (err) {
             console.error(err);
@@ -76,7 +90,7 @@ const Profile = () => {
             const response = await axios.put(url + "/api/user/profile", formData, { headers: { token } });
             if (response.data.success) {
                 toast.success("Cập nhật thông tin thành công!");
-                setUserData(prev => ({ ...prev, name: formData.name }));
+                setUserData(prev => ({ ...prev, ...formData }));
             } else {
                 toast.error(response.data.message);
             }
@@ -134,16 +148,34 @@ const Profile = () => {
                 </div>
                 <hr/>
                 <div className='profile-edit-section'>
-                    <h3>{t('fix')}</h3>
-                    <label htmlFor="name">{t('name')}</label>
-                    <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={onChangeHandler}
-                        required
-                    />
+                    <h3>{t('basic_info')}</h3>
+                    <div className="multi-fields-profile" style={{display:'flex', gap:'10px'}}>
+                        <div style={{flex:1}}>
+                            <label>Họ</label>
+                            <input name="ho" value={formData.ho} onChange={onChangeHandler} />
+                        </div>
+                        <div style={{flex:1}}>
+                            <label>Tên</label>
+                            <input name="name" value={formData.name} onChange={onChangeHandler} />
+                        </div>
+                    </div>
+                        <div style={{flex:1}}>
+                    <label>Số điện thoại</label>
+                    <input name="phone" value={formData.phone} onChange={onChangeHandler} />
+                        </div>
+                        <div style={{flex:1}}>
+                    <label>Tỉnh/Thành phố</label>
+                    <input name="tinh" value={formData.tinh} onChange={onChangeHandler} />
+                        </div>
+                        <div style={{flex:1}}>
+                            <label>Phường/Xã</label>
+                            <input name="phuongXa" value={formData.phuongXa} onChange={onChangeHandler} />
+                        </div>
+                    <div style={{flex:1}}>
+                        <label>Tên đường</label>
+                        <input name="tenDuong" value={formData.tenDuong} onChange={onChangeHandler} />
+                    </div>
+
                     <button type='submit' className='update-button'>{t('update')}</button>
                 </div>
             </form>

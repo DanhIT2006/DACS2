@@ -3,12 +3,14 @@ import './ShopProfile.css';
 import { StoreContext } from '../../../../cuahang/src/context/StoreContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const ShopProfile = () => {
     const { url, token, decodeJWT } = useContext(StoreContext);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
-    // State để lưu thông tin cửa hàng
     const [shopData, setShopData] = useState({
         shopName: '',
         address: '',
@@ -19,7 +21,6 @@ const ShopProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Kiểm tra vai trò và chuyển hướng nếu không phải shop_owner
     useEffect(() => {
         if (!token) {
             navigate('/');
@@ -27,18 +28,15 @@ const ShopProfile = () => {
         }
         const payload = decodeJWT(token);
         if (!payload || payload.role !== 'shop_owner') {
-            alert("Bạn không có quyền quản trị cửa hàng!");
+            toast.error(t('error_no_permission'));
             navigate('/');
         }
-    }, [token, navigate]);
+    }, [token, navigate, t]);
 
-
-    // 1. Lấy dữ liệu cửa hàng
     const fetchShopProfile = async () => {
         if (!token) return;
 
         try {
-            // Gọi API shop profile
             const response = await axios.get(url + "/api/shop/profile", {
                 headers: { token }
             });
@@ -46,11 +44,11 @@ const ShopProfile = () => {
             if (response.data.success) {
                 setShopData(response.data.data);
             } else {
-                setError(response.data.message || "Không thể tải hồ sơ cửa hàng");
+                setError(t('error_fetch_profile'));
             }
         } catch (err) {
             console.error("Lỗi fetch shop profile:", err);
-            setError("Lỗi kết nối hoặc Server không phản hồi.");
+            setError(t('toast_connection_error'));
         } finally {
             setLoading(false);
         }
@@ -60,15 +58,11 @@ const ShopProfile = () => {
         fetchShopProfile();
     }, [token]);
 
-
-    // 2. Xử lý sự kiện thay đổi Form
     const onChangeHandler = (event) => {
         const { name, value } = event.target;
         setShopData(prev => ({ ...prev, [name]: value }));
     };
 
-
-    // 3. Xử lý cập nhật thông tin
     const handleUpdate = async (event) => {
         event.preventDefault();
         if (!token) return;
@@ -79,68 +73,68 @@ const ShopProfile = () => {
             });
 
             if (response.data.success) {
-                alert("Cập nhật thông tin cửa hàng thành công!");
+                toast.success(t('toast_update_profile_success'));
                 setShopData(response.data.data);
             } else {
-                alert("Lỗi cập nhật: " + (response.data.message || "Không rõ"));
+                toast.error(t('toast_update_profile_error'));
             }
         } catch (err) {
             console.error("Lỗi cập nhật:", err);
-            alert("Lỗi kết nối hoặc Server.");
+            toast.error(t('toast_connection_error'));
         }
     };
 
-    if (loading) return <div className='shop-profile-page loading'>Đang tải hồ sơ cửa hàng...</div>;
-    if (error) return <div className='shop-profile-page error'>Lỗi: {error}</div>;
+    if (loading) return <div className='shop-profile-page loading'>{t('loading_profile')}</div>;
+    if (error) return <div className='shop-profile-page error'>{t('error_label')}: {error}</div>;
 
     return (
         <div className='shop-profile-page'>
-            <h2>Quản lý Thông tin Cửa hàng</h2>
+            <h2>{t('manage_shop_info_title')}</h2>
             <form onSubmit={handleUpdate} className="shop-profile-container">
 
-                <label htmlFor="shopName">Tên Cửa hàng</label>
+                <label htmlFor="shopName">{t('shop_name_label')}</label>
                 <input
                     id="shopName"
                     name="shopName"
                     type="text"
                     value={shopData.shopName}
                     onChange={onChangeHandler}
-                    placeholder='Nhập tên cửa hàng'
+                    placeholder={t('placeholder_shop_name')}
                     required
                 />
 
-                <label htmlFor="address">Địa chỉ Cửa hàng</label>
+                <label htmlFor="address">{t('shop_address_label')}</label>
                 <input
                     id="address"
                     name="address"
                     type="text"
                     value={shopData.address}
                     onChange={onChangeHandler}
-                    placeholder='Nhập địa chỉ'
+                    placeholder={t('placeholder_shop_address')}
                     required
                 />
 
-                <label htmlFor="phone">Số điện thoại liên hệ</label>
+                <label htmlFor="phone">{t('shop_phone_label')}</label>
                 <input
                     id="phone"
                     name="phone"
                     type="text"
                     value={shopData.phone}
                     onChange={onChangeHandler}
-                    placeholder='Nhập số điện thoại'
+                    placeholder={t('placeholder_shop_phone')}
                 />
 
-                <label htmlFor="description">Mô tả về Cửa hàng</label>
+                <label htmlFor="description">{t('shop_description_label')}</label>
                 <textarea
                     id="description"
                     name="description"
                     value={shopData.description}
                     onChange={onChangeHandler}
-                    placeholder='Mô tả ngắn về cửa hàng của bạn...'
+                    placeholder={t('placeholder_shop_description')}
                 />
 
                 <button type='submit' className='update-button'>
-                    Cập nhật Thông tin Cửa hàng
+                    {t('update_shop_info_btn')}
                 </button>
             </form>
         </div>

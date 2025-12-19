@@ -40,7 +40,7 @@ const createToken = (id) => {
 
 // register user
 const registerUser = async (req, res) => {
-    const { name, password, email, role } = req.body;
+    const { ho,name, password, email, role } = req.body;
     try {
         const exists = await userModel.findOne({ email });
         if (exists) {
@@ -57,6 +57,7 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new userModel({
+            ho,
             name,
             email,
             password: hashedPassword,
@@ -98,8 +99,12 @@ const updateProfile = async (req, res) => {
         const updatedUser = await userModel.findByIdAndUpdate(
             userId,
             {
+                ho: updates.ho,
                 name: updates.name,
-                // Thêm
+                phone: updates.phone,
+                tinh: updates.tinh,
+                phuongXa: updates.phuongXa,
+                tenDuong: updates.tenDuong
             },
             { new: true, runValidators: true } //true để trả về document đã cập nhật
         ).select('-password');

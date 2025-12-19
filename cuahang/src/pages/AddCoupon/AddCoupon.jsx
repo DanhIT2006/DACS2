@@ -3,8 +3,13 @@ import './AddCoupon.css'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { StoreContext } from '../../context/StoreContext'
+import { useTranslation } from 'react-i18next';
+
 
 const AddCoupon = ({ url }) => {
+
+    const { t } = useTranslation();
+
 
     // Lấy danh sách TẤT CẢ món từ Context
     const { token, food_list } = useContext(StoreContext);
@@ -79,62 +84,87 @@ const AddCoupon = ({ url }) => {
                 headers: { token }
             });
             if (response.data.success) {
-                toast.success("Tạo mã thành công!");
+                toast.success(t('toast_coupon_success'));
                 setData({ ...data, code: "", discountValue: "" });
                 setSelectedFoods([]);
             } else {
-                toast.error(response.data.message);
+                toast.error(response.data.message ||   t('toast_coupon_error'));
             }
         } catch (error) {
-            toast.error("Lỗi kết nối");
-        }
+            toast.error(t('toast_connection_error'));        }
     }
 
     return (
         <div className='add-coupon'>
-            <h2>Tạo Mã Giảm Giá Mới</h2>
+            <h2>{t('add_coupon_title')}</h2>
             <form onSubmit={onSubmitHandler} className='flex-col'>
-                {/* ... Các ô input giữ nguyên ... */}
+
                 <div className="add-product-name flex-col">
-                    <p>Mã giảm giá (Code)</p>
-                    <input onChange={onChangeHandler} value={data.code} type="text" name='code' placeholder='VD: SALE50' required />
+                    <p>{t('coupon_code')}</p>
+                    <input
+                        onChange={onChangeHandler}
+                        value={data.code}
+                        type="text"
+                        name='code'
+                        placeholder={t('placeholder_coupon_code')}
+                        required
+                    />
                 </div>
+
                 <div className="add-price flex-col">
-                    <p>Loại giảm giá</p>
+                    <p>{t('discount_type')}</p>
                     <select onChange={onChangeHandler} name="discountType" className='coupon-select'>
-                        <option value="percent">Giảm theo Phần trăm (%)</option>
-                        <option value="fixed">Giảm theo Tiền mặt (VNĐ)</option>
+                        <option value="percent">{t('type_percent')}</option>
+                        <option value="fixed">{t('type_fixed')}</option>
                     </select>
                 </div>
+
                 <div className="add-product-name flex-col">
-                    <p>Giá trị giảm</p>
-                    <input onChange={onChangeHandler} value={data.discountValue} type="number" name='discountValue' placeholder='VD:20 (20%)' required />
+                    <p>{t('discount_value')}</p>
+                    <input
+                        onChange={onChangeHandler}
+                        value={data.discountValue}
+                        type="number"
+                        name='discountValue'
+                        placeholder={t('placeholder_discount_value')}
+                        required
+                    />
                 </div>
+
                 <div className="add-product-name flex-col">
-                    <p>Hạn sử dụng</p>
-                    <input onChange={onChangeHandler} value={data.expiryDate} type="date" name='expiryDate' required />
+                    <p>{t('expiry_date')}</p>
+                    <input
+                        onChange={onChangeHandler}
+                        value={data.expiryDate}
+                        type="date"
+                        name='expiryDate'
+                        required
+                    />
                 </div>
 
                 {/* --- PHẦN HIỂN THỊ DANH SÁCH --- */}
                 <div className="food-selection flex-col">
-                    <p>Áp dụng cho món ăn (Đã lọc món của quán bạn)</p>
+                    <p>{t('apply_to_food')}</p>
                     <div className="food-list-container">
-                        {/* QUAN TRỌNG: Dùng myFoods thay vì food_list */}
                         {myFoods.length > 0 ? (
                             myFoods.map((item) => (
-                                <div key={item._id} className={`food-checkbox-item ${selectedFoods.includes(item._id) ? 'active' : ''}`} onClick={() => toggleFood(item._id)}>
+                                <div
+                                    key={item._id}
+                                    className={`food-checkbox-item ${selectedFoods.includes(item._id) ? 'active' : ''}`}
+                                    onClick={() => toggleFood(item._id)}
+                                >
                                     <input type="checkbox" checked={selectedFoods.includes(item._id)} readOnly />
                                     <img src={`${url}/images/${item.image}`} alt="" />
                                     <span>{item.name}</span>
                                 </div>
                             ))
                         ) : (
-                            <p>Không tìm thấy món ăn nào của quán bạn.</p>
+                            <p>{t('no_food_found')}</p>
                         )}
                     </div>
                 </div>
 
-                <button type='submit' className='add-btn'>Tạo Mã</button>
+                <button type='submit' className='add-btn'>{t('create_coupon_btn')}</button>
             </form>
         </div>
     )

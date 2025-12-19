@@ -29,7 +29,9 @@ const resources = {
             "drink": "Drink",
             "snacks": "Snacks",
             "healthy_food" : "Healthy food",
+            //food display
             "display_title": "All dishes",
+            "search_placeholder" : "Search",
             //food item
             "store" : "Store",
             //footer
@@ -46,6 +48,9 @@ const resources = {
             "quantity" : "Quantity",
             "total" : "Total",
             "delete_dish" : "Delete dish",
+            "select_payment_method": "Select Payment Method",
+            "cash_on_delivery": "Cash on Delivery",
+            "qr_payment": "Online via QR Code",
             // Cart bottom
             "total_cart" : "Total cost of the shopping cart",
             "fee" : "Fee",
@@ -59,7 +64,7 @@ const resources = {
             //Profile
             "profile_title": "Personal Information",
             "role": "Role",
-            "fix": "Edit Basic Information",
+            "basic_info": "Edit Basic Information",
             "name": "Name",
             "update": "Update Information",
             "cancel_password": "Cancel Password Change",
@@ -87,6 +92,26 @@ const resources = {
             "status_delivered": "Delivered",
             "status_cancelled": "Cancelled",
             "no_order" : "No order",
+            //Place Order
+            "delivery_info": "Delivery Information",
+            "last_name": "Last Name",
+            "first_name": "First Name",
+            "province": "Province/City",
+            "ward": "Ward",
+            "street_name": "Street/House Number",
+            "phone_number": "Phone Number",
+            "cart_totals": "Cart Totals",
+            "subtotal": "Subtotal",
+            "proceed_to_pay": "Proceed to Pay",
+            "place_order_btn": "Place Order",
+            "scan_to_pay": "Scan to Pay",
+            "qr_instruction": "Please scan the QR code below to complete your order of",
+            "cancel": "Cancel",
+            "i_have_paid": "I have paid",
+            "order_success_msg": "Order placed successfully!",
+            "toast_connection_error": "Connection error, please try again"
+
+
 
         }
     },
@@ -119,6 +144,7 @@ const resources = {
             "healthy_food" : "Món Healthy",
             //food display
             "display_title": "Tất cả món ăn",
+            "search_placeholder" : "Tìm kiếm",
             // food item
             "store" : "Cửa hàng",
             //footer
@@ -135,6 +161,9 @@ const resources = {
             "quantity" : "Số lượng",
             "total" : "Tổng tiền",
             "delete_dish" : "Xóa món",
+            "select_payment_method": "Chọn phương thức thanh toán",
+            "cash_on_delivery": "Tiền mặt",
+            "qr_payment": "Quét mã QR Online",
             // Cart bottom
             "total_cart" : "Tổng chi chí của giỏ hàng",
              //price
@@ -148,7 +177,8 @@ const resources = {
             //Profile
             "profile_title": "Thông tin cá nhân",
             "role": "Vai trò",
-            "fix" : "Chỉnh sửa thông tin cơ bản",
+            "name" : "Tên",
+            "basic_info" : "Chỉnh sửa thông tin cơ bản",
             "update" : "Cập nhật thông tin",
             "cancel_password" : "Hủy đổi mật khẩu",
             "change_password" : "Đổi mật khẩu",
@@ -175,6 +205,25 @@ const resources = {
             "status_delivered": "Đã giao hàng",
             "status_cancelled": "Đã hủy",
             "no_order" : "Chưa có đơn hàng nào.",
+            //Place order
+            "delivery_info": "Thông tin giao hàng",
+            "last_name": "Họ",
+            "first_name": "Tên",
+            "province": "Tỉnh/Thành phố",
+            "ward": "Phường/Xã",
+            "street_name": "Tên đường/Số nhà",
+            "phone_number": "Số điện thoại",
+            "cart_totals": "Tổng giỏ hàng",
+            "subtotal": "Tạm tính",
+            "proceed_to_pay": "Tiến hành thanh toán",
+            "place_order_btn": "Đặt hàng",
+            "scan_to_pay": "Quét mã thanh toán",
+            "qr_instruction": "Vui lòng quét mã bên dưới để hoàn tất đơn hàng trị giá",
+            "cancel": "Hủy",
+            "i_have_paid": "Tôi đã chuyển khoản",
+            "order_success_msg": "Đặt hàng thành công!",
+            "toast_connection_error": "Lỗi kết nối, vui lòng thử lại sau"
+
 
 
         }
