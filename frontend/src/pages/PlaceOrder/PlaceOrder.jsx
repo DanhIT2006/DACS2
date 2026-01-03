@@ -99,10 +99,18 @@ const PlaceOrder = () => {
     };
 
     const getQRUrl = () => {
+        const selectedFoodNames = food_list
+            .filter(item => cartItems[item._id] > 0)
+            .map(item => item.name)
+            .join(", ");
+
         const BANK_ID = "BIDV";
         const ACCOUNT_NO = "8852316592";
-        const info = `Thanh toan don hang ${data.phone}`;
-        return `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact.png?amount=${finalTotal}&addInfo=${encodeURIComponent(info)}`;
+        const ACCOUNT_NAME = "VO THANH DANH"
+        const info = `Thanh toan don hang ${selectedFoodNames}`;
+        return `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-print.png?amount=${finalTotal}&addInfo=${encodeURIComponent(
+            info
+        )}&accountName=${encodeURIComponent(ACCOUNT_NAME)}`;
     };
 
     // Tự động load Profile khi vào trang
