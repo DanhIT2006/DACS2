@@ -6,9 +6,9 @@ import { StoreContext } from '../../context/StoreContext'
 import axios from "axios"
 
 // eslint-disable-next-line react/prop-types
-const LoginPopup = ({setShowLogin}) => {
+const LoginPopup = ({setShowLogin, setShopId,setToken}) => {
 
-  const {url,setToken, decodeJWT} = useContext(StoreContext)
+  const {url, decodeJWT} = useContext(StoreContext)
 
 
   const [currState,setCurrState] = useState("Login")
@@ -50,6 +50,12 @@ const LoginPopup = ({setShowLogin}) => {
         if (response.data.token) {
           setToken(response.data.token);
           localStorage.setItem("token", response.data.token);
+
+          if (response.data.shopId) {
+            localStorage.setItem("shopId", response.data.shopId);
+            setShopId(response.data.shopId);
+          }
+
           setShowLogin(false);
 
           const payload = decodeJWT(response.data.token);

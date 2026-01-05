@@ -97,6 +97,8 @@ const resources = {
             "error_fetch_profile": "Could not load shop profile",
             "toast_update_profile_success": "Shops information updated successfully!",
             "toast_update_profile_error": "Update failed. Please try again.",
+            //shop comment
+            "comments_of_customer": "Comment of Customer",
 
 
         }
@@ -196,6 +198,7 @@ const resources = {
             "error_fetch_profile": "Không thể tải hồ sơ cửa hàng",
             "toast_update_profile_success": "Cập nhật thông tin cửa hàng thành công!",
             "toast_update_profile_error": "Cập nhật thất bại. Vui lòng thử lại.",
+            "comments_of_customer": "Đánh giá của khách hàng",
 
 
 

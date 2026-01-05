@@ -4,6 +4,7 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
+import shopModel from "../models/shopModel.js";
 
 // 1. Tạo Token
 const createToken = (id, role) => {
@@ -33,7 +34,13 @@ const loginUser = async (req, res) => {
         }
 
         const token = createToken(user._id, user.role);
-        res.json({ success: true, token, message: "Đăng nhập thành công" });
+        // lay id shop
+        let shopId = "";
+        if (user.role === 'shop_owner') {
+            const shop = await shopModel.findOne({ userId: user._id });
+            shopId = shop ? shop._id : "";
+        }
+        res.json({ success: true, token, shopId, message: "Đăng nhập thành công" });
     } catch (error) {
         res.json({ success: false, message: "Lỗi server: " + error.message });
     }
